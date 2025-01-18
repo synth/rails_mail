@@ -1,3 +1,3 @@
 RailsMail::Engine.routes.draw do
-  resources :emails
+  resources :emails, only: [ :index, :show ]
 end

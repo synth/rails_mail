@@ -8,36 +8,16 @@ module RailsMail
 
     test "visiting the index" do
       visit emails_url
-      assert_selector "h1", text: "Emails"
+      assert_selector "h1", text: "RailsMail"
     end
 
-    test "should create email" do
+    test "viewing an email" do
       visit emails_url
-      click_on "New email"
+      click_on @email.subject
 
-      fill_in "Data", with: @email.data
-      click_on "Create Email"
-
-      assert_text "Email was successfully created"
-      click_on "Back"
-    end
-
-    test "should update Email" do
-      visit email_url(@email)
-      click_on "Edit this email", match: :first
-
-      fill_in "Data", with: @email.data
-      click_on "Update Email"
-
-      assert_text "Email was successfully updated"
-      click_on "Back"
-    end
-
-    test "should destroy Email" do
-      visit email_url(@email)
-      click_on "Destroy this email", match: :first
-
-      assert_text "Email was successfully destroyed"
+      assert_text @email.subject
+      assert_text @email.from
+      assert_text @email.to.join(", ")
     end
   end
 end
