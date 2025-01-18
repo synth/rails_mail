@@ -1,0 +1,16 @@
+<p style="color: green"><%= notice %></p>
+
+<% content_for :title, "Emails" %>
+
+<h1>Emails</h1>
+
+<div id="emails">
+  <% @emails.each do |email| %>
+    <%= render email %>
+    <p>
+      <%= link_to "Show this email", email %>
+    </p>
+  <% end %>
+</div>
+
+<%= link_to "New email", new_email_path %>

@@ -1,0 +1,12 @@
+<% content_for :title, "Editing email" %>
+
+<h1>Editing email</h1>
+
+<%= render "form", email: @email %>
+
+<br>
+
+<div>
+  <%= link_to "Show this email", @email %> |
+  <%= link_to "Back to emails", emails_path %>
+</div>

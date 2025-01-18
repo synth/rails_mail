@@ -14,6 +14,9 @@ module RailsMail
         content_type: mail.content_type,
         attachments: mail.attachments.map { |a| { filename: a.filename, content_type: a.content_type } }
       )
+    rescue => e
+      Rails.logger.error("Failed to deliver email: #{e.message}")
+      raise e
     end
   end
-end 
+end

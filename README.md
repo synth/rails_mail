@@ -48,7 +48,7 @@ To install RailsMail, follow these steps:
    Run the following command to create the migration for storing emails:
 
    ```bash
-   $ rails generate rails_mail:install
+   $ rake rails_mail:install:migrations
    ```
 
 4. **Run the migration:**
