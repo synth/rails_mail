@@ -7,5 +7,9 @@ module RailsMail
         ActionMailer::Base.add_delivery_method :rails_mail, RailsMail::DeliveryMethod
       end
     end
+
+    config.before_initialize do
+      Turbo::Engine if defined?(Turbo)
+    end
   end
 end

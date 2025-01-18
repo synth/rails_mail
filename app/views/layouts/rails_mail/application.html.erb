@@ -6,6 +6,7 @@
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
     <script src="https://cdn.tailwindcss.com"></script>
+    <%= turbo_include_tags %>
   </head>
 
   <body class="bg-gray-100">
@@ -16,19 +17,18 @@
           <h1 class="text-xl font-semibold text-gray-800">RailsMail</h1>
         </div>
         <nav class="px-2">
-          <%= render "rails_mail/shared/email_list" %>
+          <%= turbo_frame_tag "email_list" do %>
+            <%= render "rails_mail/shared/email_list" %>
+          <% end %>
         </nav>
       </div>
 
       <!-- Main content -->
       <div class="flex-1 overflow-y-auto">
         <div class="p-8">
-          <% if notice %>
-            <div class="mb-4 p-4 bg-green-100 border border-green-400 text-green-700 rounded">
-              <%= notice %>
-            </div>
+          <%= turbo_frame_tag "email_content" do %>
+            <%= yield %>
           <% end %>
-          <%= yield %>
         </div>
       </div>
     </div>
