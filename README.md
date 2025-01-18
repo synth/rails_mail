@@ -9,36 +9,59 @@ RailsMail saves all outgoing emails to your database instead of actually sending
 
 To use RailsMail in your application:
 
-1. Configure Action Mailer to use RailsMail as the delivery method:
-```ruby
-# config/environments/development.rb (or staging.rb)
-config.action_mailer.delivery_method = :rails_mail
-```
+1. **Configure Action Mailer to use RailsMail as the delivery method:**
 
-2. Mount the engine in your routes:
-```ruby
-# config/routes.rb
-mount RailsMail::Engine => "/rails_mail"
-```
+   Add the following configuration to your `config/environments/development.rb` (or `staging.rb`):
 
-3. Visit `/rails_mail` in your browser to view all captured emails.
+   ```ruby
+   config.action_mailer.delivery_method = :rails_mail
+   ```
+
+2. **Mount the engine in your routes:**
+
+   Add the following line to your `config/routes.rb`:
+
+   ```ruby
+   mount RailsMail::Engine => "/rails_mail"
+   ```
+
+3. **Visit `/rails_mail` in your browser to view all captured emails.**
 
 ## Installation
-Add this line to your application's Gemfile:
 
-```ruby
-gem "rails_mail"
-```
+To install RailsMail, follow these steps:
 
-And then execute:
-```bash
-$ bundle
-```
+1. **Add the gem to your application's Gemfile:**
 
-Or install it yourself as:
-```bash
-$ gem install rails_mail
-```
+   ```ruby
+   gem "rails_mail"
+   ```
+
+2. **Run `bundle install` to install the gem:**
+
+   ```bash
+   $ bundle install
+   ```
+
+3. **Generate the necessary database migration:**
+
+   Run the following command to create the migration for storing emails:
+
+   ```bash
+   $ rails generate rails_mail:install
+   ```
+
+4. **Run the migration:**
+
+   Apply the migration to your database:
+
+   ```bash
+   $ rails db:migrate
+   ```
+
+5. **Start your Rails server and access the RailsMail interface:**
+
+   Visit `http://localhost:3000/rails_mail` to view captured emails.
 
 ## Contributing
 Contribution directions go here.
