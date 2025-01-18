@@ -1,7 +1,23 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  data: 
+  data:
+    from: "test@example.com"
+    to: ["recipient@example.com"]
+    cc: ["cc@example.com"]
+    bcc: ["bcc@example.com"]
+    subject: "Test Email"
+    body: "Hello World"
+    content_type: "text/plain"
+    attachments: []
 
 two:
-  data: 
+  data:
+    from: "other@example.com"
+    to: ["other@example.com"]
+    cc: []
+    bcc: []
+    subject: "Other Email"
+    body: "Other content"
+    content_type: "text/plain"
+    attachments: []

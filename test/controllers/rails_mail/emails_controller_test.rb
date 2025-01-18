@@ -6,6 +6,7 @@ module RailsMail
 
     setup do
       @email = rails_mail_emails(:one)
+      @routes = Engine.routes
     end
 
     test "should get index" do
@@ -20,7 +21,15 @@ module RailsMail
 
     test "should create email" do
       assert_difference("Email.count") do
-        post emails_url, params: { email: { data: @email.data } }
+        post emails_url, params: {
+          email: {
+            data: {
+              from: "test@example.com",
+              to: [ "recipient@example.com" ],
+              subject: "Test Email"
+            }
+          }
+        }
       end
 
       assert_redirected_to email_url(Email.last)
@@ -37,7 +46,15 @@ module RailsMail
     end
 
     test "should update email" do
-      patch email_url(@email), params: { email: { data: @email.data } }
+      patch email_url(@email), params: {
+        email: {
+          data: {
+            from: "test@example.com",
+            to: [ "recipient@example.com" ],
+            subject: "Test Email"
+          }
+        }
+      }
       assert_redirected_to email_url(@email)
     end
 

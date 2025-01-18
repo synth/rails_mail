@@ -1,3 +1,3 @@
-Rails.application.routes.draw do
+RailsMail::Engine.routes.draw do
   resources :emails
 end

@@ -54,7 +54,7 @@ module RailsMail
 
       # Only allow a list of trusted parameters through.
       def email_params
-        params.require(:email).permit(:data)
+        params.require(:email).permit(data: [ :from, :to, :cc, :bcc, :subject, :body, :content_type, :attachments, { to: [], cc: [], bcc: [] } ])
       end
   end
 end

@@ -63,6 +63,15 @@ To install RailsMail, follow these steps:
 
    Visit `http://localhost:3000/rails_mail` to view captured emails.
 
+6. **Run the tests:**
+
+   To ensure everything is set up correctly, run the engine's tests:
+
+   ```bash
+   $ rails test
+   ```
+
+
 ## Contributing
 Contribution directions go here.
 
