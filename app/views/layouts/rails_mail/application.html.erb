@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>RailsMail - <%= yield(:title) if content_for?(:title) %></title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+
+  <body class="bg-gray-100">
+    <div class="flex h-screen">
+      <!-- Sidebar -->
+      <div class="w-80 bg-white border-r border-gray-200 overflow-y-auto">
+        <div class="p-4 border-b border-gray-200">
+          <h1 class="text-xl font-semibold text-gray-800">RailsMail</h1>
+        </div>
+        <nav class="px-2">
+          <%= render "rails_mail/shared/email_list" %>
+        </nav>
+      </div>
+
+      <!-- Main content -->
+      <div class="flex-1 overflow-y-auto">
+        <div class="p-8">
+          <% if notice %>
+            <div class="mb-4 p-4 bg-green-100 border border-green-400 text-green-700 rounded">
+              <%= notice %>
+            </div>
+          <% end %>
+          <%= yield %>
+        </div>
+      </div>
+    </div>
+  </body>
+</html> 

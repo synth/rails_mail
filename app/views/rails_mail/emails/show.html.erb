@@ -1,10 +1,46 @@
-<p style="color: green"><%= notice %></p>
+<div class="bg-white shadow rounded-lg">
+  <div class="px-6 py-4 border-b border-gray-200">
+    <h1 class="text-2xl font-semibold text-gray-900"><%= @email.subject %></h1>
+    <div class="mt-2 text-sm text-gray-600">
+      <div>From: <%= @email.from %></div>
+      <div>To: <%= @email.to.join(", ") %></div>
+      <% if @email.cc.present? %>
+        <div>CC: <%= @email.cc.join(", ") %></div>
+      <% end %>
+      <% if @email.bcc.present? %>
+        <div>BCC: <%= @email.bcc.join(", ") %></div>
+      <% end %>
+      <div class="text-gray-400 mt-1">
+        <%= @email.created_at.strftime("%B %d, %Y at %I:%M %p") %>
+      </div>
+    </div>
+  </div>
 
-<%= render @email %>
+  <div class="px-6 py-4">
+    <% if @email.attachments.present? %>
+      <div class="mb-4 p-4 bg-gray-50 rounded-md">
+        <h3 class="text-sm font-medium text-gray-900 mb-2">Attachments</h3>
+        <div class="space-y-2">
+          <% @email.attachments.each do |attachment| %>
+            <div class="flex items-center text-sm">
+              <svg class="h-5 w-5 text-gray-400 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13" />
+              </svg>
+              <span><%= attachment["filename"] %></span>
+              <span class="ml-2 text-gray-500">(<%= attachment["content_type"] %>)</span>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
 
-<div>
-  <%= link_to "Edit this email", edit_email_path(@email) %> |
-  <%= link_to "Back to emails", emails_path %>
+    <div class="prose max-w-none">
+      <%= simple_format @email.body %>
+    </div>
+  </div>
 
-  <%= button_to "Destroy this email", @email, method: :delete %>
+  <div class="px-6 py-4 border-t border-gray-200 flex justify-end space-x-3">
+    <%= link_to "Edit", edit_email_path(@email), class: "px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50" %>
+    <%= button_to "Delete", email_path(@email), method: :delete, class: "px-4 py-2 text-sm font-medium text-white bg-red-600 border border-transparent rounded-md hover:bg-red-700", data: { confirm: "Are you sure?" } %>
+  </div>
 </div>
