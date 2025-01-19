@@ -10,7 +10,11 @@ module RailsMail
     def show
       @emails = Email.order(created_at: :desc)
       @email = Email.find(params[:id])
-      render action: "show", layout: false
+      if request.headers["Turbo-Frame"]
+        render action: "show", layout: false
+      else
+        render action: "index", layout: true
+      end
     end
   end
 end
