@@ -1,14 +1,11 @@
-<div class="bg-white shadow rounded-lg">
-  <div class="px-6 py-4 border-b border-gray-200">
-    <h1 class="text-xl font-semibold text-gray-900"><%= @email.subject %></h1>
-  </div>
-
-  <div class="px-6 py-4">
-    <div class="text-sm font-medium text-gray-900"><%= @email.subject %></div>
-    <div class="text-sm text-gray-500 mt-1">
-      From: <%= @email.from %><br>
-      To: <%= @email.to.join(", ") %><br>
-      <%= time_ago_in_words(@email.created_at) %> ago
+<%= turbo_frame_tag "email_content", src: email_path(@email) do %>
+  <div class="bg-white shadow rounded-lg">
+    <div class="px-6 py-4">
+      <div class="animate-pulse">
+        <div class="h-4 bg-gray-200 rounded w-3/4 mb-4"></div>
+        <div class="h-3 bg-gray-200 rounded w-1/2 mb-2"></div>
+        <div class="h-3 bg-gray-200 rounded w-1/3"></div>
+      </div>
     </div>
   </div>
-</div>
+<% end %>

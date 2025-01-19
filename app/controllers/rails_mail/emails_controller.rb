@@ -3,13 +3,14 @@ module RailsMail
     # GET /emails
     def index
       @emails = Email.order(created_at: :desc)
-      @email = params[:id] ? Email.find(params[:id]) : Email.first
+      @email = params[:id] ? Email.find(params[:id]) : Email.last
     end
 
     # GET /emails/1
     def show
       @emails = Email.order(created_at: :desc)
       @email = Email.find(params[:id])
+      render action: "show", layout: false
     end
   end
 end
