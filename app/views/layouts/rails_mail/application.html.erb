@@ -5,8 +5,9 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@hotwired/turbo@7.3.0/dist/turbo.es2017-umd.min.js"></script>
+    <%= tag.link rel: "stylesheet", href: frontend_static_path(:style, format: :css, v: RailsMail::VERSION, locale: nil), nonce: content_security_policy_nonce %>
+    
+    <%= tag.script "", src: frontend_static_path(:tailwind, format: :js, v: RailsMail::VERSION, locale: nil), nonce: content_security_policy_nonce %>
   </head>
 
   <body class="bg-gray-100">
