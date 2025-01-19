@@ -13,7 +13,8 @@ module RailsMail
     # Additional JS modules that don't live in app/frontend/rails_mail/modules
     MODULE_OVERRIDES = {
       application: RailsMail::Engine.root.join("app", "frontend", "rails_mail", "application.js"),
-      stimulus: RailsMail::Engine.root.join("app", "frontend", "rails_mail", "vendor", "stimulus.js")
+      stimulus: RailsMail::Engine.root.join("app", "frontend", "rails_mail", "vendor", "stimulus.js"),
+      turbo: RailsMail::Engine.root.join("app", "frontend", "rails_mail", "vendor", "turbo.js")
     }.freeze
 
     def self.js_modules
