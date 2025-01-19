@@ -8,7 +8,11 @@
     <%= tag.link rel: "stylesheet", href: frontend_static_path(:style, format: :css, v: RailsMail::VERSION, locale: nil), nonce: content_security_policy_nonce %>
     
     <%= tag.script "", src: frontend_static_path(:tailwind, format: :js, v: RailsMail::VERSION, locale: nil), nonce: content_security_policy_nonce %>
-    <%= tag.script "", src: frontend_static_path(:turbo, format: :js, v: RailsMail::VERSION, locale: nil), nonce: content_security_policy_nonce %>
+
+    <% importmaps = RailsMail::FrontendsController.js_modules.keys.index_with { |module_name| frontend_module_path(module_name, format: :js, locale: nil) } %>
+    <%= tag.script({ imports: importmaps }.to_json.html_safe, type: "importmap", nonce: content_security_policy_nonce) %>
+    <%= tag.script "", type: "module", nonce: content_security_policy_nonce do %> import "application"; <% end %>    
+
   </head>
 
   <body class="bg-gray-100">

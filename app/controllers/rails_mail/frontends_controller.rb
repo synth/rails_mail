@@ -6,15 +6,15 @@ module RailsMail
         style: RailsMail::Engine.root.join("app", "frontend", "rails_mail", "style.css")
       },
       js: {
-        tailwind: RailsMail::Engine.root.join("app", "frontend", "rails_mail", "vendor", "tailwind", "tailwind.min.js"),
-        turbo: RailsMail::Engine.root.join("app", "frontend", "rails_mail", "vendor", "turbo", "turbo.js")
+        tailwind: RailsMail::Engine.root.join("app", "frontend", "rails_mail", "vendor", "tailwind", "tailwind.min.js")
       }
     }.freeze
 
     # Additional JS modules that don't live in app/frontend/rails_mail/modules
     MODULE_OVERRIDES = {
       application: RailsMail::Engine.root.join("app", "frontend", "rails_mail", "application.js"),
-      stimulus: RailsMail::Engine.root.join("app", "frontend", "rails_mail", "vendor", "stimulus.js")
+      stimulus: RailsMail::Engine.root.join("app", "frontend", "rails_mail", "vendor", "stimulus.js"),
+      turbo: RailsMail::Engine.root.join("app", "frontend", "rails_mail", "vendor", "turbo.js")
     }.freeze
 
     def self.js_modules
