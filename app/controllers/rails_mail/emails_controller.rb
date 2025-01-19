@@ -3,7 +3,7 @@ module RailsMail
     # GET /emails
     def index
       @emails = Email.order(created_at: :desc)
-      @email = params[:id] ? Email.find(params[:id]) : Email.first
+      @email = params[:id] ? Email.find(params[:id]) : Email.last
     end
 
     # GET /emails/1
