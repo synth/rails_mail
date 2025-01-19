@@ -1,6 +1,11 @@
-<div class="space-y-1" id="email_list">
+<div class="space-y-1">
   <% @emails.each do |email| %>
-    <%= link_to email_path(email), class: "block px-3 py-2 rounded-md #{current_page?(email_path(email)) ? 'bg-gray-100' : 'hover:bg-gray-50'}", data: { turbo: true } do %>
+    <%= link_to email_path(email), 
+          class: "block px-3 py-2 rounded-md #{current_page?(email_path(email)) ? 'bg-gray-100' : 'hover:bg-gray-50'}", 
+          data: { 
+            "turbo-frame": "email_content",
+            "turbo-action": "advance"
+          } do %>
       <div class="text-sm font-medium text-gray-900 truncate"><%= email.subject %></div>
       <div class="text-xs text-gray-500">
         <span class="truncate"><%= email.from %></span>
