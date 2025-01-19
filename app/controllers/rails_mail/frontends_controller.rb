@@ -6,7 +6,8 @@ module RailsMail
         style: RailsMail::Engine.root.join("app", "frontend", "rails_mail", "style.css")
       },
       js: {
-        tailwind: RailsMail::Engine.root.join("app", "frontend", "rails_mail", "vendor", "tailwind", "tailwind.min.js")
+        tailwind: RailsMail::Engine.root.join("app", "frontend", "rails_mail", "vendor", "tailwind", "tailwind.min.js"),
+        turbo: RailsMail::Engine.root.join("app", "frontend", "rails_mail", "vendor", "turbo", "turbo.js")
       }
     }.freeze
 
