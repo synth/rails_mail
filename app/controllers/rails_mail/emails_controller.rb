@@ -10,10 +10,15 @@ module RailsMail
     def show
       @emails = Email.order(created_at: :desc)
       @email = Email.find(params[:id])
-      if request.headers["Turbo-Frame"]
-        render action: "show", layout: false
-      else
-        render action: "index", layout: true
+      respond_to do |format|
+        format.html
+        format.turbo_stream do
+          render turbo_stream: turbo_stream.update(
+            "email_content",
+            partial: "rails_mail/emails/show",
+            locals: { email: @email }
+          )
+        end
       end
     end
   end

@@ -3,6 +3,7 @@
   <head>
     <title>RailsMail - <%= yield(:title) if content_for?(:title) %></title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
+    <%= action_cable_meta_tag %>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
     <%= tag.link rel: "stylesheet", href: frontend_static_path(:style, format: :css, v: RailsMail::VERSION, locale: nil), nonce: content_security_policy_nonce %>
