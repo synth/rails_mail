@@ -1,0 +1,20 @@
+<%
+  on_current_page = current_page?(RailsMail::Engine.routes.url_helpers.email_path(email))
+  highlight_class = on_current_page ? 'bg-gray-100' : ''
+%>
+<%= link_to RailsMail::Engine.routes.url_helpers.email_path(email), 
+      class: "block px-3 py-2 rounded-md hover:bg-gray-50 #{highlight_class} active:bg-gray-100 focus:bg-gray-100", 
+      data: { 
+        "turbo-frame": "email_content",
+        "turbo-action": "advance",
+        "turbo-prefetch": "false",
+        "email-highlight-target": "link",
+        "email-id": email.id,
+        action: "click->email-highlight#highlight"
+      } do %>
+  <div class="text-sm font-medium text-gray-900 truncate"><%= email.subject %></div>
+  <div class="text-xs text-gray-500">
+    <span class="truncate"><%= email.from %></span>
+    <span class="ml-2 text-gray-400"><%= time_ago_in_words(email.created_at) %> ago</span>
+  </div>
+<% end %> 

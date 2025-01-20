@@ -3,10 +3,17 @@
   <head>
     <title>RailsMail - <%= yield(:title) if content_for?(:title) %></title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
+    <%= action_cable_meta_tag if defined?(::ActionCable) %>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@hotwired/turbo@7.3.0/dist/turbo.es2017-umd.min.js"></script>
+    <%= tag.link rel: "stylesheet", href: frontend_static_path(:style, format: :css, v: RailsMail::VERSION, locale: nil), nonce: content_security_policy_nonce %>
+    
+    <%= tag.script "", src: frontend_static_path(:tailwind, format: :js, v: RailsMail::VERSION, locale: nil), nonce: content_security_policy_nonce %>
+
+    <% importmaps = RailsMail::FrontendsController.js_modules.keys.index_with { |module_name| frontend_module_path(module_name, format: :js, locale: nil) } %>
+    <%= tag.script({ imports: importmaps }.to_json.html_safe, type: "importmap", nonce: content_security_policy_nonce) %>
+    <%= tag.script "", type: "module", nonce: content_security_policy_nonce do %> import "application"; <% end %>    
+
   </head>
 
   <body class="bg-gray-100">
@@ -14,21 +21,19 @@
       <!-- Sidebar -->
       <div class="w-80 bg-white border-r border-gray-200 overflow-y-auto">
         <div class="p-4 border-b border-gray-200">
-          <h1 class="text-xl font-semibold text-gray-800">RailsMail</h1>
+          <h1 class="text-xl font-semibold text-gray-800"><%= link_to "RailsMail", root_path %></h1>
         </div>
         <nav class="px-2">
-          <div id="email_list" data-turbo-frame="email_list">
-            <%= render "rails_mail/shared/email_list" %>
-          </div>
+          <%= render "rails_mail/shared/email_sidebar" %>
         </nav>
       </div>
 
       <!-- Main content -->
       <div class="flex-1 overflow-y-auto">
         <div class="p-8">
-          <div id="email_content" data-turbo-frame="email_content">
+          <turbo-frame id="email_content">
             <%= yield %>
-          </div>
+          </turbo-frame>
         </div>
       </div>
     </div>
