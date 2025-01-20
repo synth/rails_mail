@@ -1,4 +1,4 @@
-<%= link_to RailsMail::Engine.routes.url_helpers.email_path(email, format: :turbo_stream), 
+<%= link_to RailsMail::Engine.routes.url_helpers.email_path(email), 
       class: "block px-3 py-2 rounded-md #{params[:id] == email.id.to_s ? 'bg-gray-100' : 'hover:bg-gray-50'}", 
       data: { 
         "turbo-frame": "email_content",
