@@ -1,7 +1,7 @@
 <%= turbo_stream_from "rails_mail:emails", channel: "RailsMail::EmailsChannel" %>
 
-<div id="emails-list" class="space-y-1">
+<div id="email-sidebar" data-controller="email-highlight">
   <% @emails.each do |email| %>
     <%= render "rails_mail/shared/email", email: email %>
   <% end %>
-</div> 
+</div>
