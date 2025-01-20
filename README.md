@@ -70,8 +70,24 @@ To install RailsMail, follow these steps:
    ```bash
    $ rails test
    ```
+## Real-time updates
 
+RailsMail uses Turbo, TurboStreams, and ActionCable to provide real-time updates in the ui when emails are delivered. When you send an email, the new email will be displayed in the list of emails. There may be gotchas depending on your setup and environment.
 
+### Gotchas
+
+- In development environment, the typical default for ActionCable (cable.yml) is to use the async adapter which is an in-memory adapter. If you try to send an email from the rails console, it will not auto-update the ui. You can change the adapter to the development adapter by running `cable.yml` to use something like the redis, postgresql adapter, or solidcable. 
+- In staging environments, the same idea typically applies that you need to use a multi-process adapter like redis, postgresql, or solidcable.
+
+## Future work / ideas
+
+- Implement adapters to support real-time updates without ActionCable (polling or SSE)
+- Implement search
+- Implement a delete all and/or delete email button
+- Implement attachments support
+- Implement introspection of application notifiers and allow manual delivery/inspection of emails
+  - Need to introspect the arguments of the notifier and see if the arguments can be paired with active record models or to allow a mapping of argument type to sample data. 
+  
 ## Contributing
 Contribution directions go here.
 

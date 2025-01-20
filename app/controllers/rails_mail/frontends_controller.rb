@@ -14,11 +14,20 @@ module RailsMail
     MODULE_OVERRIDES = {
       application: RailsMail::Engine.root.join("app", "frontend", "rails_mail", "application.js"),
       stimulus: RailsMail::Engine.root.join("app", "frontend", "rails_mail", "vendor", "stimulus.js"),
-      turbo: RailsMail::Engine.root.join("app", "frontend", "rails_mail", "vendor", "turbo.js")
+      turbo: RailsMail::Engine.root.join("app", "frontend", "rails_mail", "vendor", "turbo.js"),
+      action_cable: RailsMail::Engine.root.join("app", "frontend", "rails_mail", "vendor", "action_cable.js")
     }.freeze
 
     def self.js_modules
-      @_js_modules ||= RailsMail::Engine.root.join("app", "frontend", "rails_mail", "modules").children.select(&:file?).each_with_object({}) do |file, modules|
+      if Rails.env.production?
+        @_js_modules ||= load_js_modules
+      else
+        load_js_modules
+      end
+    end
+
+    def self.load_js_modules
+      RailsMail::Engine.root.join("app", "frontend", "rails_mail", "modules").children.select(&:file?).each_with_object({}) do |file, modules|
         key = File.basename(file.basename.to_s, ".js").to_sym
         modules[key] = file
       end.merge(MODULE_OVERRIDES)

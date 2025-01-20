@@ -11,9 +11,9 @@ module RailsMail
       @emails = Email.order(created_at: :desc)
       @email = Email.find(params[:id])
       if request.headers["Turbo-Frame"]
-        render action: "show", layout: false
+        render partial: "rails_mail/emails/show", locals: { email: @email }
       else
-        render action: "index", layout: true
+        render :index
       end
     end
   end
