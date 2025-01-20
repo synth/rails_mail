@@ -11,10 +11,12 @@ module RailsMail
     private
 
     def broadcast_email
-      Turbo::StreamsChannel.broadcast_prepend_to(
-        "rails_mail:emails",
-        target: "emails-list",
-        partial: "rails_mail/shared/email",
+      return unless defined?(::Turbo)
+
+      ::Turbo::StreamsChannel.broadcast_update_to(
+        "emails",
+        target: "emails",
+        partial: "rails_mail/emails/email",
         locals: { email: self }
       )
     end
