@@ -11,7 +11,7 @@ module RailsMail
     private
 
     def broadcast_email
-      return unless defined?(::Turbo)
+      return unless defined?(::Turbo) && defined?(::ActionCable)
 
       ::Turbo::StreamsChannel.broadcast_update_to(
         "emails",
@@ -19,6 +19,8 @@ module RailsMail
         partial: "rails_mail/emails/email",
         locals: { email: self }
       )
+    rescue NameError => e
+      Rails.logger.debug "Skipping broadcast: #{e.message}"
     end
   end
 end

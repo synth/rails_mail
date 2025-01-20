@@ -23,5 +23,4 @@ Gem::Specification.new do |spec|
   end
 
   spec.add_dependency "rails", ">= 7", "< 9"
-  spec.add_dependency "turbo-rails"
 end

@@ -9,6 +9,8 @@ module RailsMail
     end
 
     def turbo_stream_from(*streamables, **attributes)
+      return unless defined?(::ActionCable)
+
       raise ArgumentError, "streamables can't be blank" unless streamables.any?(&:present?)
       attributes[:channel] = attributes[:channel]&.to_s || "Turbo::StreamsChannel"
       # attributes[:"signed-stream-name"] = Turbo::StreamsChannel.signed_stream_name(streamables)

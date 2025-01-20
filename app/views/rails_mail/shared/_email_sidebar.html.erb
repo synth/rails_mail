@@ -1,4 +1,6 @@
-<%= turbo_stream_from "rails_mail:emails", channel: "RailsMail::EmailsChannel" %>
+<% if defined?(::ActionCable) %>
+  <%= turbo_stream_from "rails_mail:emails", channel: "RailsMail::EmailsChannel" %>
+<% end %>
 
 <div id="email-sidebar" data-controller="email-highlight">
   <% @emails.each do |email| %>
