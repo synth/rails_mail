@@ -20,8 +20,27 @@
     <div class="flex h-screen">
       <!-- Sidebar -->
       <div class="w-80 bg-white border-r border-gray-200 overflow-y-auto">
-        <div class="p-4 border-b border-gray-200">
-          <h1 class="text-xl font-semibold text-gray-800"><%= link_to "RailsMail", root_path %></h1>
+        <div class="flex items-center justify-between p-4 border-b">
+          <div class="flex items-center">
+            <%= link_to root_path, class: "text-gray-900" do %>
+              <h1 class="text-xl font-bold">Rails Mail</h1>
+            <% end %>
+          </div>
+
+          <% if instance_eval(&RailsMail.show_clear_button?) %>                
+            <%= button_to destroy_all_emails_path, 
+                class: "text-sm text-gray-600 hover:text-gray-900",
+                form: { data: { turbo_confirm: "Are you sure you want to clear all emails?" } },
+                method: :delete do %>
+              <div class="flex items-center">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                </svg>
+                Clear All
+              </div>
+            <% end %>
+          <% end %>
+          
         </div>
         <nav class="px-2">
           <%= render "rails_mail/shared/email_sidebar" %>
