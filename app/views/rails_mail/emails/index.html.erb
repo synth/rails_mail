@@ -1,11 +1,20 @@
-<%= turbo_frame_tag "email_content", src: email_path(@email) do %>
-  <div class="bg-white shadow rounded-lg">
-    <div class="px-6 py-4">
-      <div class="animate-pulse">
-        <div class="h-4 bg-gray-200 rounded w-3/4 mb-4"></div>
-        <div class="h-3 bg-gray-200 rounded w-1/2 mb-2"></div>
-        <div class="h-3 bg-gray-200 rounded w-1/3"></div>
+<% if @email.present? %>
+  <%= turbo_frame_tag "email_content", src: email_path(@email) do %>
+    <div class="bg-white shadow rounded-lg">
+      <div class="px-6 py-4">
+        <div class="animate-pulse">
+          <div class="h-4 bg-gray-200 rounded w-3/4 mb-4"></div>
+          <div class="h-3 bg-gray-200 rounded w-1/2 mb-2"></div>
+          <div class="h-3 bg-gray-200 rounded w-1/3"></div>
+        </div>
       </div>
     </div>
+  <% end %>
+<% else %>
+  <div class="flex flex-col items-center justify-center h-screen">
+    <h1 class="text-2xl font-bold mb-4">No emails at the moment</h1>
+    <h2 class="text-xl mb-16">Once emails are sent from your app, they will appear here</h2>
+    <%= image_tag "rails_mail/rails-mail.png", class: "mb-16" %>
   </div>
 <% end %>
+

@@ -3,7 +3,7 @@
 <% end %>
 
 <div id="email-sidebar" data-controller="email-highlight">
-  <% @emails.each do |email| %>
+  <% @emails&.each do |email| %>
     <%= render "rails_mail/shared/email", email: email %>
   <% end %>
 </div>

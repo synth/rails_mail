@@ -23,4 +23,5 @@ Gem::Specification.new do |spec|
   end
 
   spec.add_dependency "rails", ">= 7", "< 9"
+  spec.add_development_dependency "debug", ">= 1.0.0"
 end

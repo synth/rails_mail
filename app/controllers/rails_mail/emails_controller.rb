@@ -1,5 +1,5 @@
 module RailsMail
-  class EmailsController < ApplicationController
+  class EmailsController < BaseController
     # GET /emails
     def index
       @emails = Email.order(created_at: :desc)

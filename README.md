@@ -70,6 +70,37 @@ To install RailsMail, follow these steps:
    ```bash
    $ rails test
    ```
+
+## Authentication
+Authentication is optional, but recommended and will depend on your application's authentication setup. This gem provides an `authentication_callback` that you can configure in the initializer which is helpful for Authlogic. If you are using Devise, you can simply route the mount point of the engine. 
+
+### Authlogic
+
+If you're using Authlogic, configure the authentication in the initializer:
+```ruby
+# config/initializers/rails_mail.rb
+RailsMail.configure do |config|
+    config.authentication_callback do
+      user_session = UserSession.find
+      # Provide a more helpful message in development
+      msg = Rails.env.development? ? 'Forbidden - make sure you have the correct permission in config/initializers/rails_mail.rb' : 'Not Found'
+      raise ActionController::RoutingError.new(msg) unless user_session&.user&.admin?
+    end
+  end
+end
+```
+
+### Devise
+
+If you're using Devise, you can simply wrap the mount point of the engine using Devise's `authenticate` route helper.
+
+```ruby
+# config/routes.rb
+authenticate :user, ->(user) { user.admin? } do
+    mount RailsMail::Engine => "/rails_mail"
+end
+```
+
 ## Real-time updates
 
 RailsMail uses Turbo, TurboStreams, and ActionCable to provide real-time updates in the ui when emails are delivered. When you send an email, the new email will be displayed in the list of emails. There may be gotchas depending on your setup and environment.
@@ -81,12 +112,15 @@ RailsMail uses Turbo, TurboStreams, and ActionCable to provide real-time updates
 
 ## Future work / ideas
 
-- Implement adapters to support real-time updates without ActionCable (polling or SSE)
+- Implement trimming
+  - Trim by count (eg max 1000 emails)
+  - Time by age (eg max 10 days)
 - Implement search
-- Implement a delete all and/or delete email button
+- Implement a delete all and/or delete email button 
+- Implement adapters to support real-time updates without ActionCable (polling or SSE)
 - Implement attachments support
 - Implement introspection of application notifiers and allow manual delivery/inspection of emails
-  - Need to introspect the arguments of the notifier and see if the arguments can be paired with active record models or to allow a mapping of argument type to sample data. 
+  - Need to introspect the arguments of the notifier and see if the arguments can be paired with active record models or to allow a mapping of argument type to sample data / fixtures. 
   
 ## Contributing
 Contribution directions go here.
