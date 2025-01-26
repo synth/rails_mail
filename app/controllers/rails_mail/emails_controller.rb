@@ -16,5 +16,18 @@ module RailsMail
         render :index
       end
     end
+
+    def destroy_all
+      # Email.destroy_all
+      respond_to do |format|
+        format.html { redirect_to emails_path }
+        format.turbo_stream {
+          render turbo_stream: [
+            turbo_stream.update("email-sidebar", ""),
+            turbo_stream.update("email_content", partial: "empty_state")
+          ]
+        }
+      end
+    end
   end
 end
