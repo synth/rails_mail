@@ -112,12 +112,13 @@ RailsMail uses Turbo, TurboStreams, and ActionCable to provide real-time updates
 
 ## Future work / ideas
 
-- Implement adapters to support real-time updates without ActionCable (polling or SSE)
+- Implement trimming
 - Implement search
-- Implement a delete all and/or delete email button
+- Implement a delete all and/or delete email button 
+- Implement adapters to support real-time updates without ActionCable (polling or SSE)
 - Implement attachments support
 - Implement introspection of application notifiers and allow manual delivery/inspection of emails
-  - Need to introspect the arguments of the notifier and see if the arguments can be paired with active record models or to allow a mapping of argument type to sample data. 
+  - Need to introspect the arguments of the notifier and see if the arguments can be paired with active record models or to allow a mapping of argument type to sample data / fixtures. 
   
 ## Contributing
 Contribution directions go here.
