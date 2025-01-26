@@ -8,8 +8,6 @@ module RailsMail
 
     def authenticate!
       instance_eval(&RailsMail.authentication_callback) if RailsMail.authentication_callback.kind_of?(Proc)
-      # render text: "Not authorized", status: :unauthorized
-      # false
     end
   end
 end
