@@ -14,7 +14,7 @@ module RailsMail
 
     def authentication_callback(&block)
       @authentication_callback = block if block
-      @authentication_callback || -> { true }
+      @authentication_callback || ->(request) { true }
     end
   end
 
