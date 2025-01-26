@@ -72,7 +72,7 @@ To install RailsMail, follow these steps:
    ```
 
 ## Authentication
-Authentication is optional, but recommended and will depend on your application's authentication setup. This gem provides an `authentication_callback` that you can configure in the initializer which is helpful for Authlogic. If you are using Devise, you can simply route the mount point of the engine. 
+Authentication is optional, but recommended and will depend on your application's authentication setup. This gem provides an `authentication_callback` that you can configure in the initializer which is helpful for Authlogic. If you are using Devise, you can simply wrap the mount point of the engine. 
 
 ### Authlogic
 
