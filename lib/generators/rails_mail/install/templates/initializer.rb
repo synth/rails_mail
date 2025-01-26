@@ -1,3 +1,5 @@
+# rubocop:disable Layout/CommentIndentation
+
 RailsMail.configure do |config|
   # Authentication setup
   # if left blank, authentication is skipped
