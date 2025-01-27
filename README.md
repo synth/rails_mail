@@ -115,13 +115,20 @@ RailsMail uses Turbo, TurboStreams, and ActionCable to provide real-time updates
 - Implement trimming
   - Trim by count (eg max 1000 emails)
   - Time by age (eg max 10 days)
-- Implement search
+- Implement dynamic time ago in words
 - Implement infinite scroll rather than loading all emails at once
 - Implement adapters to support real-time updates without ActionCable (polling or SSE)
 - Implement attachments support
 - Implement introspection of application notifiers and allow manual delivery/inspection of emails
   - Need to introspect the arguments of the notifier and see if the arguments can be paired with active record models or to allow a mapping of argument type to sample data / fixtures. 
   
+## Features
+- Captures all outgoing emails and stores them in your database
+- Real-time updates using Turbo and ActionCable
+- Search functionality across email fields (subject, from, to, cc, bcc)
+- Clean, responsive UI for viewing email contents
+- Optional authentication support
+
 ## Contributing
 Contribution directions go here.
 
