@@ -9,7 +9,7 @@ module RailsMail
 
       respond_to do |format|
         format.html
-        format.turbo_stream if params[:q].present?
+        format.turbo_stream if params.key?(:q)
       end
     end
 
