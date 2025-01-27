@@ -15,6 +15,11 @@
   <div class="text-sm font-medium text-gray-900 truncate"><%= email.subject %></div>
   <div class="text-xs text-gray-500">
     <span class="truncate"><%= email.from %></span>
-    <span class="ml-2 text-gray-400"><%= time_ago_in_words(email.created_at) %> ago</span>
+    <time 
+      data-controller="timeago" 
+      data-timeago-datetime-value="<%= email.created_at.iso8601 %>" 
+      data-timeago-refresh-interval-value="1000" 
+      data-timeago-include-seconds-value="true" 
+      class="ml-2 text-gray-400"><%= time_ago_in_words(email.created_at) %> ago</time>
   </div>
 <% end %> 

@@ -15,7 +15,8 @@ module RailsMail
       application: RailsMail::Engine.root.join("app", "frontend", "rails_mail", "application.js"),
       stimulus: RailsMail::Engine.root.join("app", "frontend", "rails_mail", "vendor", "stimulus.js"),
       turbo: RailsMail::Engine.root.join("app", "frontend", "rails_mail", "vendor", "turbo.js"),
-      action_cable: RailsMail::Engine.root.join("app", "frontend", "rails_mail", "vendor", "action_cable.js")
+      action_cable: RailsMail::Engine.root.join("app", "frontend", "rails_mail", "vendor", "action_cable.js"),
+      "date-fns": RailsMail::Engine.root.join("app", "frontend", "rails_mail", "vendor", "date-fns.js")
     }.freeze
 
     def self.js_modules
