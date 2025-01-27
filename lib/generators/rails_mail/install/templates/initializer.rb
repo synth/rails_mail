@@ -16,4 +16,8 @@ RailsMail.configure do |config|
     # to prevent accidental deletion of emails
     Rails.env.development?
   end
+
+  config.trim_emails_older_than = 30.days
+  config.trim_emails_max_count = 1000
+  config.sync_via = :later
 end
