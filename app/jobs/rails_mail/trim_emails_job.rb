@@ -23,7 +23,7 @@ module RailsMail
 
     def trim_by_age
       cutoff_date = RailsMail.configuration.trim_emails_older_than.ago
-      RailsMail::Email.where('created_at < ?', cutoff_date).destroy_all
+      RailsMail::Email.where("created_at < ?", cutoff_date).destroy_all
     end
 
     def trim_by_count
@@ -33,8 +33,8 @@ module RailsMail
       emails_to_delete = RailsMail::Email
         .order(created_at: :desc)
         .offset(max_count)
-      
+
       emails_to_delete.destroy_all
     end
   end
-end 
+end

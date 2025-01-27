@@ -1,4 +1,4 @@
-require 'test_helper'
+require "test_helper"
 
 module RailsMail
   class TrimEmailsJobTest < ActiveJob::TestCase
@@ -14,17 +14,17 @@ module RailsMail
       RailsMail.configuration.trim_emails_max_count = @old_config[:trim_emails_max_count]
     end
 
-    def create_email(from: 'test1@example.com', to: 'test2@example.com', subject: 'test', created_at: 12.hours.ago)
+    def create_email(from: "test1@example.com", to: "test2@example.com", subject: "test", created_at: 12.hours.ago)
       RailsMail::Email.create!(from: from, to: to, subject: subject, created_at: created_at)
     end
 
     test "trims by age" do
       RailsMail.configuration.trim_emails_older_than = 1.day
-      
+
       old_email = create_email(created_at: 2.days.ago)
       new_email = create_email(created_at: 12.hours.ago)
 
-      assert_difference 'RailsMail::Email.count', -1 do
+      assert_difference "RailsMail::Email.count", -1 do
         RailsMail::TrimEmailsJob.perform_now
       end
 
@@ -39,7 +39,7 @@ module RailsMail
 
       emails = 4.times.map { create_email }
 
-      assert_difference 'RailsMail::Email.count', -2 do
+      assert_difference "RailsMail::Email.count", -2 do
         RailsMail::TrimEmailsJob.perform_now
       end
 
@@ -57,7 +57,7 @@ module RailsMail
       old_emails = 2.times.map { create_email(created_at: 2.days.ago) }
       new_emails = 3.times.map { create_email(created_at: 12.hours.ago) }
 
-      assert_difference 'RailsMail::Email.count', -3 do
+      assert_difference "RailsMail::Email.count", -3 do
         RailsMail::TrimEmailsJob.perform_now
       end
 
@@ -67,4 +67,4 @@ module RailsMail
       assert RailsMail::Email.exists?(new_emails[-2].id)
     end
   end
-end 
+end
