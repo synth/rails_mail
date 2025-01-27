@@ -5,7 +5,9 @@ RailsMail saves all outgoing emails to your database instead of actually sending
 - Local development to inspect emails without setting up a real mail server
 - Staging environments where you want to prevent actual email delivery
 - Testing email templates and layouts
-  
+
+![rails mail screenshot](http://github.com/synth/rails-mail/blob/main/rails-mail-demo.png)
+
 ### Features
 * Implements delivery_method for ActionMailer to catch emails and store them in the database
 * Real-time updates using Turbo and ActionCable
