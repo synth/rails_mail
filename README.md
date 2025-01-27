@@ -1,31 +1,11 @@
 # RailsMail
 RailsMail is a Rails engine that provides a database-backed delivery method for Action Mailer, primarily intended for local development and staging environments. It captures emails sent through your Rails application and provides a web interface to view them.
 
-## Usage
 RailsMail saves all outgoing emails to your database instead of actually sending them. This is particularly useful for:
 - Local development to inspect emails without setting up a real mail server
 - Staging environments where you want to prevent actual email delivery
 - Testing email templates and layouts
-
-To use RailsMail in your application:
-
-1. **Configure Action Mailer to use RailsMail as the delivery method:**
-
-   Add the following configuration to your `config/environments/development.rb` (or `staging.rb`):
-
-   ```ruby
-   config.action_mailer.delivery_method = :rails_mail
-   ```
-
-2. **Mount the engine in your routes:**
-
-   Add the following line to your `config/routes.rb`:
-
-   ```ruby
-   mount RailsMail::Engine => "/rails_mail"
-   ```
-
-3. **Visit `/rails_mail` in your browser to view all captured emails.**
+  
 
 ## Installation
 
@@ -63,13 +43,63 @@ To install RailsMail, follow these steps:
 
    Visit `http://localhost:3000/rails_mail` to view captured emails.
 
-6. **Run the tests:**
 
-   To ensure everything is set up correctly, run the engine's tests:
+## Usage
 
-   ```bash
-   $ rails test
+To use RailsMail in your application:
+
+1. **Configure Action Mailer to use RailsMail as the delivery method:**
+
+   Add the following configuration to your `config/environments/development.rb` (or `staging.rb`):
+
+   ```ruby
+   config.action_mailer.delivery_method = :rails_mail
    ```
+
+2. **Mount the engine in your routes:**
+
+   Add the following line to your `config/routes.rb`:
+
+   ```ruby
+   mount RailsMail::Engine => "/rails_mail"
+   ```
+
+3. **Configure the initializer**
+   See the [Configuration](#configuration) section for more details.
+
+4. **Visit `/rails_mail` in your browser to view all captured emails.**
+
+### Configuration
+
+RailsMail can be configured through an initializer:
+
+```ruby
+# config/initializers/rails_mail.rb
+RailsMail.configure do |config|
+  # Optional authentication callback
+  # (if using Authlogic. If using Devise see the Authentication section)
+  config.authentication_callback do
+    user_session = UserSession.find
+    raise ActionController::RoutingError.new('Not Found') unless user_session&.user&.admin?
+  end
+
+  # Delete emails older than the specified duration
+  config.trim_emails_older_than = 30.days
+
+  # Keep only the most recent N emails
+  config.trim_emails_max_count = 1000
+
+  # Control whether trimming runs synchronously (:now) or asynchronously (:later)
+  config.sync_via = :later
+end
+```
+
+### Configuration Options
+
+- `authentication_callback`: A block that will be called before accessing RailsMail routes
+- `trim_emails_older_than`: Accepts an ActiveSupport::Duration object (e.g., 30.days). Emails older than this duration will be deleted.
+- `trim_emails_max_count`: Keeps only the N most recent emails, deleting older ones.
+- `sync_via`: Controls whether the trimming job runs synchronously (:now) or asynchronously (:later)
 
 ## Authentication
 Authentication is optional, but recommended and will depend on your application's authentication setup. This gem provides an `authentication_callback` that you can configure in the initializer which is helpful for Authlogic. If you are using Devise, you can simply wrap the mount point of the engine. 
@@ -134,3 +164,4 @@ Contribution directions go here.
 
 ## License
 The gem is available as open source under the terms of the [MIT License](https://opensource.org/licenses/MIT).
+
