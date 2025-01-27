@@ -6,6 +6,15 @@ RailsMail saves all outgoing emails to your database instead of actually sending
 - Staging environments where you want to prevent actual email delivery
 - Testing email templates and layouts
   
+### Features
+* Implements delivery_method for ActionMailer to catch emails and store them in the database
+* Real-time updates using Turbo and ActionCable
+* Search functionality across email fields (subject, from, to, cc, bcc)
+* Clean, responsive UI for viewing email contents
+* Optional authentication support
+* Trimming emails older than a specified duration or a maximum number of emails
+* Ability to manually clear emails out and turn on/off that functionality based on environment (eg, so that in Staging, other stakeholders can't clear emails out, but in dev sometimes you want a clean slate)
+* Dynamic time ago in words using date-fns
 
 ## Installation
 
