@@ -8,6 +8,10 @@ module RailsMail
 
     after_create_commit :broadcast_email
 
+    scope :search, ->(query) {
+      where("CAST(data AS CHAR) LIKE :q", q: "%#{query}%")
+    }
+
     private
 
     def broadcast_email

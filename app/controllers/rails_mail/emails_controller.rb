@@ -2,8 +2,15 @@ module RailsMail
   class EmailsController < BaseController
     # GET /emails
     def index
-      @emails = Email.order(created_at: :desc)
+      @emails = Email.all
+      @emails = @emails.search(params[:q]) if params[:q].present?
+      @emails = @emails.order(created_at: :desc)
       @email = params[:id] ? Email.find(params[:id]) : Email.last
+
+      respond_to do |format|
+        format.html
+        format.turbo_stream
+      end
     end
 
     # GET /emails/1
