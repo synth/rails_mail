@@ -17,10 +17,10 @@ module RailsMail
     def broadcast_email
       return unless defined?(::Turbo) && defined?(::ActionCable)
 
-      ::Turbo::StreamsChannel.broadcast_update_to(
-        "emails",
-        target: "emails",
-        partial: "rails_mail/emails/email",
+      ::Turbo::StreamsChannel.broadcast_prepend_to(
+        "rails_mail:emails",
+        target: "email-sidebar",
+        partial: "rails_mail/shared/email",
         locals: { email: self }
       )
     rescue NameError => e

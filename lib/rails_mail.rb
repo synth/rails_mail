@@ -1,6 +1,7 @@
 require "rails_mail/version"
 require "rails_mail/engine"
 require "rails_mail/delivery_method"
+require "rails_mail/configuration"
 
 module RailsMail
   class << self
