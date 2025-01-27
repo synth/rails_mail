@@ -5,7 +5,18 @@ RailsMail saves all outgoing emails to your database instead of actually sending
 - Local development to inspect emails without setting up a real mail server
 - Staging environments where you want to prevent actual email delivery
 - Testing email templates and layouts
-  
+
+![rails mail screenshot](http://github.com/synth/rails-mail/blob/main/rails-mail-demo.png)
+
+### Features
+* Implements delivery_method for ActionMailer to catch emails and store them in the database
+* Real-time updates using Turbo and ActionCable
+* Search functionality across email fields (subject, from, to, cc, bcc)
+* Clean, responsive UI for viewing email contents
+* Optional authentication support
+* Trimming emails older than a specified duration or a maximum number of emails
+* Ability to manually clear emails out and turn on/off that functionality based on environment (eg, so that in Staging, other stakeholders can't clear emails out, but in dev sometimes you want a clean slate)
+* Dynamic time ago in words using date-fns
 
 ## Installation
 
@@ -142,7 +153,6 @@ RailsMail uses Turbo, TurboStreams, and ActionCable to provide real-time updates
 
 ## Future work / ideas
 
-- Implement dynamic time ago in words
 - Implement infinite scroll rather than loading all emails at once
 - Implement adapters to support real-time updates without ActionCable (polling or SSE)
 - Implement attachments support
