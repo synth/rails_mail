@@ -37,10 +37,13 @@
       <% end %>
 
       <div class="prose max-w-none">
-
-        <%= sanitize(email.body, 
-          tags: ActionView::Base.sanitized_allowed_tags + ['table', 'tbody', 'tr', 'td'], 
-          attributes: ActionView::Base.sanitized_allowed_attributes + ['style']) %>
+        <% if email.html? %>
+          <%= sanitize(email.body, 
+            tags: ActionView::Base.sanitized_allowed_tags + ['table', 'tbody', 'tr', 'td'], 
+            attributes: ActionView::Base.sanitized_allowed_attributes + ['style']) %>
+        <% else %>
+          <%= simple_format email.body %>
+        <% end %>
       </div>
     </div>
   </div>

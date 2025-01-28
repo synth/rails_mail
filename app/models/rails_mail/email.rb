@@ -12,6 +12,13 @@ module RailsMail
       where("CAST(data AS CHAR) LIKE :q", q: "%#{query}%")
     }
 
+    def text?
+      content_type&.include?("text/plain")
+    end
+
+    def html?
+      content_type&.include?("text/html")
+    end
     private
 
     def broadcast_email
