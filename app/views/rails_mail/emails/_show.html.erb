@@ -37,7 +37,10 @@
       <% end %>
 
       <div class="prose max-w-none">
-        <%= simple_format email.body %>
+
+        <%= sanitize(email.body, 
+          tags: ActionView::Base.sanitized_allowed_tags + ['table', 'tbody', 'tr', 'td'], 
+          attributes: ActionView::Base.sanitized_allowed_attributes + ['style']) %>
       </div>
     </div>
   </div>
