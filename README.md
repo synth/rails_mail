@@ -161,13 +161,6 @@ RailsMail uses Turbo, TurboStreams, and ActionCable to provide real-time updates
 - Implement read/unread functionality
 - Implement individual email delete
 - Implement multi-part (text/html) email support
-  
-## Features
-- Captures all outgoing emails and stores them in your database
-- Real-time updates using Turbo and ActionCable
-- Search functionality across email fields (subject, from, to, cc, bcc)
-- Clean, responsive UI for viewing email contents
-- Optional authentication support
 
 ## Contributing
 Contribution directions go here.
