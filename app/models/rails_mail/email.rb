@@ -35,7 +35,7 @@ module RailsMail
     end
 
     def schedule_trim_job
-      if RailsMail.configuration.sync_via == :now
+      if RailsMail.configuration.trim_via == :perform_now
         RailsMail::TrimEmailsJob.perform_now
       else
         RailsMail::TrimEmailsJob.perform_later

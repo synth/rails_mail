@@ -19,5 +19,5 @@ RailsMail.configure do |config|
 
   config.trim_emails_older_than = 30.days
   config.trim_emails_max_count = 1000
-  config.sync_via = :later
+  config.trim_via = :perform_later
 end
