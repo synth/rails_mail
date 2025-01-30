@@ -12,7 +12,7 @@ module RailsMail
     end
 
     def trim_via=(value)
-      unless [ :now, :later ].include?(value)
+      unless [ :perform_now, :perform_later ].include?(value)
         raise ArgumentError, "trim_via must be :now or :later"
       end
       @trim_via = value
