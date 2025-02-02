@@ -6,7 +6,7 @@ module RailsMail
     validates :to, presence: true
 
     after_create_commit :broadcast_email
-    after_create_commit :schedule_trim_job
+    after_create_commit :enqueue_trim_job
 
     scope :search, ->(query) {
       where("CAST(data AS CHAR) LIKE :q", q: "%#{query}%")
@@ -19,6 +19,7 @@ module RailsMail
     def html?
       content_type&.include?("text/html")
     end
+
     private
 
     def broadcast_email
@@ -34,14 +35,10 @@ module RailsMail
       Rails.logger.error "RailsMail::Email#broadcast_email failed: #{e.message}"
     end
 
-    def schedule_trim_job
-      if RailsMail.configuration.trim_via == :perform_now
-        RailsMail::TrimEmailsJob.perform_now
-      else
-        RailsMail::TrimEmailsJob.perform_later
-      end
+    def enqueue_trim_job
+      RailsMail.configuration.enqueue_trim_job.call(self)
     rescue StandardError => e
-      Rails.logger.error "RailsMail::Email#schedule_trim_job Failed: #{e.message}"
+      Rails.logger.error "RailsMail::Email#enqueue_trim_job Failed: #{e.message}"
     end
   end
 end
