@@ -6,7 +6,7 @@ module RailsMail
     validates :to, presence: true
 
     after_create_commit :broadcast_email
-    after_create :schedule_trim_job
+    after_create_commit :schedule_trim_job
 
     scope :search, ->(query) {
       where("CAST(data AS CHAR) LIKE :q", q: "%#{query}%")
@@ -30,8 +30,8 @@ module RailsMail
         partial: "rails_mail/shared/email",
         locals: { email: self }
       )
-    rescue NameError => e
-      Rails.logger.debug "Skipping broadcast: #{e.message}"
+    rescue StandardError => e
+      Rails.logger.error "RailsMail::Email#broadcast_email failed: #{e.message}"
     end
 
     def schedule_trim_job
@@ -40,6 +40,8 @@ module RailsMail
       else
         RailsMail::TrimEmailsJob.perform_later
       end
+    rescue StandardError => e
+      Rails.logger.error "RailsMail::Email#schedule_trim_job Failed: #{e.message}"
     end
   end
 end

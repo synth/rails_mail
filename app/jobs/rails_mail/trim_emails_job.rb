@@ -12,6 +12,8 @@ module RailsMail
       if RailsMail.configuration.trim_emails_max_count
         trim_by_count
       end
+    rescue StandardError => e
+      Rails.logger.error "RailsMail::TrimJob#perform Failed: #{e.message}"
     end
 
     private
