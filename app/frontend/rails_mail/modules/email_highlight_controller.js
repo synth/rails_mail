@@ -4,7 +4,7 @@ export default class extends Controller {
   static targets = ["link"]
   
   // Define the Tailwind class as a static property
-  static activeClass = "bg-gray-100"
+  static activeClass = "bg-gray-300"
 
   connect() {
     console.log("EmailHighlightController connected")
