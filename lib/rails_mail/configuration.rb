@@ -1,21 +1,15 @@
 module RailsMail
   class Configuration
     attr_accessor :authentication_callback, :show_clear_button,
-                  :trim_emails_older_than, :trim_emails_max_count, :trim_via
+                  :trim_emails_older_than, :trim_emails_max_count,
+                  :enqueue_trim_job
 
     def initialize
       @authentication_callback = nil
       @show_clear_button = nil
       @trim_emails_older_than = nil
       @trim_emails_max_count = nil
-      @trim_via = :perform_later
-    end
-
-    def trim_via=(value)
-      unless [ :perform_now, :perform_later ].include?(value)
-        raise ArgumentError, "trim_via must be :now or :later"
-      end
-      @trim_via = value
+      @enqueue_trim_job = ->(email) { RailsMail::TrimEmailsJob.perform_later }
     end
 
     def authentication_callback=(callback)
