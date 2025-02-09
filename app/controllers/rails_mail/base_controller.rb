@@ -1,7 +1,9 @@
 module RailsMail
   class BaseController < ActionController::Base
     layout "rails_mail/application"
-    helper TurboHelper if defined?(TurboHelper)
+    helper RailsMail::TurboHelper
+    include RailsMail::TurboHelper
+
     before_action :authenticate!
 
     private

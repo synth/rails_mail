@@ -1,9 +1,9 @@
 <%
   on_current_page = current_page?(RailsMail::Engine.routes.url_helpers.email_path(email))
-  highlight_class = on_current_page ? 'bg-gray-100' : ''
+  highlight_class = on_current_page ? 'bg-gray-300' : ''
 %>
 <%= link_to RailsMail::Engine.routes.url_helpers.email_path(email), 
-      class: "block px-3 py-2 rounded-md hover:bg-gray-50 #{highlight_class} active:bg-gray-100 focus:bg-gray-100", 
+      class: "block px-3 py-2 rounded-md hover:bg-gray-200 #{highlight_class} active:bg-gray-300 focus:bg-gray-300", 
       data: { 
         "turbo-frame": "email_content",
         "turbo-action": "advance",

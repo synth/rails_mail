@@ -1,6 +1,6 @@
 module RailsMail
   module TurboHelper
-    def turbo_frame_tag(name, src: nil, &block)
+    def rails_mail_turbo_frame_tag(name, src: nil, &block)
       tag.turbo_frame id: name, src: src do
         if block_given?
           yield
@@ -8,7 +8,7 @@ module RailsMail
       end
     end
 
-    def turbo_stream_from(*streamables, **attributes)
+    def rails_mail_turbo_stream_from(*streamables, **attributes)
       return unless defined?(::ActionCable)
 
       raise ArgumentError, "streamables can't be blank" unless streamables.any?(&:present?)
@@ -18,7 +18,7 @@ module RailsMail
       tag.turbo_cable_stream_source(**attributes)
     end
 
-    def turbo_stream
+    def rails_mail_turbo_stream
       TurboStreamBuilder.new
     end
 
@@ -29,6 +29,10 @@ module RailsMail
 
       def prepend(target:, content:)
         build_stream("prepend", target, content)
+      end
+
+      def update(target:, content:)
+        build_stream("update", target, content)
       end
 
       private
