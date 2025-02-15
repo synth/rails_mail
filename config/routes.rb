@@ -4,7 +4,7 @@ RailsMail::Engine.routes.draw do
     get "static/:name", action: :static, as: :frontend_static, constraints: { format: %w[css js] }
   end
 
-  resources :emails, only: [ :index, :show ] do
+  resources :emails, only: [ :index, :show, :destroy ] do
     collection do
       delete "emails/destroy_all", to: "emails#destroy_all", as: :destroy_all
     end

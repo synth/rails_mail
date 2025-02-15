@@ -17,10 +17,23 @@ module RailsMail
     def show
       @emails = Email.order(created_at: :desc)
       @email = Email.find(params[:id])
+      session[:current_email_id] = @email.id
+
       if request.headers["Turbo-Frame"]
         render partial: "rails_mail/emails/show", locals: { email: @email }
       else
         render :index
+      end
+    end
+
+    def destroy
+      @email = Email.find(params[:id])
+      @current_email_id = session[:current_email_id]
+      @email.destroy
+
+      respond_to do |format|
+        format.html { redirect_to emails_path }
+        format.turbo_stream
       end
     end
 

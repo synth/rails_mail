@@ -2,24 +2,42 @@
   on_current_page = current_page?(RailsMail::Engine.routes.url_helpers.email_path(email))
   highlight_class = on_current_page ? 'bg-gray-300' : ''
 %>
-<%= link_to RailsMail::Engine.routes.url_helpers.email_path(email), 
-      class: "block px-3 py-2 rounded-md hover:bg-gray-200 #{highlight_class} active:bg-gray-300 focus:bg-gray-300", 
-      data: { 
-        "turbo-frame": "email_content",
-        "turbo-action": "advance",
-        "turbo-prefetch": "false",
-        "email-highlight-target": "link",
-        "email-id": email.id,
-        action: "click->email-highlight#highlight"
-      } do %>
-  <div class="text-sm font-medium text-gray-900 truncate"><%= email.subject %></div>
-  <div class="text-xs text-gray-500">
-    <span class="truncate"><%= email.from %></span>
-    <time 
-      data-controller="timeago" 
-      data-timeago-datetime-value="<%= email.created_at.iso8601 %>" 
-      data-timeago-refresh-interval-value="1000" 
-      data-timeago-include-seconds-value="true" 
-      class="ml-2 text-gray-400"><%= time_ago_in_words(email.created_at) %> ago</time>
-  </div>
+<%= content_tag :div, id: dom_id(email), class: "group flex items-center px-3 py-2 hover:bg-gray-200 #{highlight_class} active:bg-gray-300 focus:bg-gray-300" do %>
+  <%= link_to RailsMail::Engine.routes.url_helpers.email_path(email), 
+        class: "flex-1 min-w-0 rounded-md", 
+        data: { 
+          "turbo-frame": "email_content",
+          "turbo-action": "advance",
+          "turbo-prefetch": "false",
+          "email-highlight-target": "link",
+          "email-id": email.id,
+          action: "click->email-highlight#highlight"
+        } do %>
+    <div class="min-w-0">
+      <div class="text-sm font-medium text-gray-900 truncate"><%= email.subject %></div>
+      <div class="text-xs text-gray-500">
+        <span class="truncate"><%= email.from %></span>
+        <time 
+          data-controller="timeago" 
+          data-timeago-datetime-value="<%= email.created_at.iso8601 %>" 
+          data-timeago-refresh-interval-value="1000" 
+          data-timeago-include-seconds-value="true" 
+          class="ml-2 text-gray-400"><%= time_ago_in_words(email.created_at) %> ago</time>
+      </div>
+    </div>
+  <% end %>
+
+  <%= button_to email_path(email, current_email_id: @email.id),
+        method: :delete,
+        class: "hidden group-hover:block p-1 hover:bg-gray-300 rounded",
+        form: { 
+          data: { 
+            turbo_confirm: "Are you sure you want to delete this email?",
+            turbo_frame: "_top"
+          }
+        } do %>
+    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-gray-500 transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+    </svg>
+  <% end %>
 <% end %> 

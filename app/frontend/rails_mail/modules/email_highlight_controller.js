@@ -19,14 +19,14 @@ export default class extends Controller {
 
   // Called when a link is clicked
   highlight(event) {
-    // Remove active class from all links
+    // Remove active class from all email containers
     this.linkTargets.forEach(link => {
-      link.classList.remove(this.constructor.activeClass)
+      link.closest(".group").classList.remove(this.constructor.activeClass)
     })
 
-    // Add active class to clicked link
+    // Add active class to clicked email's container
     const clickedLink = event.currentTarget
-    clickedLink.classList.add(this.constructor.activeClass)
+    clickedLink.closest(".group").classList.add(this.constructor.activeClass)
   }
 
   highlightCurrentEmail() {
@@ -35,12 +35,13 @@ export default class extends Controller {
     if (emailContent) {
       const currentEmailId = emailContent.dataset.emailId
 
-      // Highlight the link with the matching email ID
+      // Highlight the container with the matching email ID
       this.linkTargets.forEach(link => {
+        const container = link.closest(".group")
         if (link.dataset.emailId === currentEmailId) {
-          link.classList.add(this.constructor.activeClass)
+          container.classList.add(this.constructor.activeClass)
         } else {
-          link.classList.remove(this.constructor.activeClass)
+          container.classList.remove(this.constructor.activeClass)
         }
       })
     }
