@@ -3,6 +3,7 @@ require "test_helper"
 module RailsMail
   class EmailsControllerTest < ActionDispatch::IntegrationTest
     include Engine.routes.url_helpers
+    include ActionView::RecordIdentifier
 
     setup do
       @email = rails_mail_emails(:one)
@@ -40,6 +41,18 @@ module RailsMail
       assert_match /<turbo-stream/, @response.body
       assert_match /email-sidebar/, @response.body
       assert_match /email_content/, @response.body
+    end
+
+    test "should destroy email with turbo stream format" do
+      assert_difference "RailsMail::Email.count", -1 do
+        delete email_url(@email), headers: {
+          Accept: "text/vnd.turbo-stream.html"
+        }
+      end
+
+      assert_response :success
+      assert_match /<turbo-stream action="remove"/, @response.body
+      assert_match /#{dom_id(@email)}/, @response.body
     end
   end
 end
