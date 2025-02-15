@@ -18,6 +18,7 @@ RailsMail saves all outgoing emails to your database instead of actually sending
 * Ability to manually clear emails in bulk or individually. The bulk delete can be turned on/off based on environment (eg, so that in Staging, other stakeholders can't clear emails out, but in dev sometimes you want a clean slate)
 * Dynamic time ago in words using date-fns
 * Ability to customize how the job that trims emails is enqueued
+* Ability to customize the title in the top left of the page via a standard Rails view that overrides the engine's default view.
 
 ## Installation
 
