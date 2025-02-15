@@ -79,7 +79,7 @@ To use RailsMail in your application:
 3. **Configure the initializer**
    See the [Configuration](#configuration) section for more details.
 
-4. **Visit `/rails_mail` in your browser to view all captured emails.**
+4. **Visit `/rails_mail` (or where ever you mounted the engine) in your browser to view all captured emails.**
 
 ### Configuration
 
@@ -112,6 +112,13 @@ end
 - `trim_emails_older_than`: Accepts an ActiveSupport::Duration object (e.g., 30.days). Emails older than this duration will be deleted.
 - `trim_emails_max_count`: Keeps only the N most recent emails, deleting older ones.
 - `sync_via`: Controls whether the trimming job runs synchronously (:now) or asynchronously (:later)
+
+### Customize the title
+Since this is a Rails engine, you can customize the title by creating a file at `app/views/layouts/rails_mail/_title.html.erb`.
+
+```erb
+<h1 class="text-xl font-bold">My apps mails</h1>
+```
 
 ## Authentication
 Authentication is optional, but recommended and will depend on your application's authentication setup. This gem provides an `authentication_callback` that you can configure in the initializer which is helpful for Authlogic. If you are using Devise, you can simply wrap the mount point of the engine. 
