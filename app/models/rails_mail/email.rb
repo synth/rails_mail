@@ -20,6 +20,10 @@ module RailsMail
       content_type&.include?("text/html")
     end
 
+    def next_email
+      RailsMail::Email.where("id < ?", id).last || RailsMail::Email.first
+    end
+
     private
 
     def broadcast_email
