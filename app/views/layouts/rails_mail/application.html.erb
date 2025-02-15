@@ -17,18 +17,35 @@
   </head>
 
   <body class="bg-gray-100">
-    <div class="flex h-screen">
-      <!-- Sidebar -->
-      <div class="w-80 bg-white border-r border-gray-200 flex flex-col">
-        <div class="flex-none p-4">
-          <div class="flex items-center justify-between">
-            <div class="flex items-center">
-              <%= link_to root_path, class: "text-gray-900" do %>
-                <h1 class="text-xl font-bold">Rails Mail</h1>
-              <% end %>
-            </div>
+    <div class="flex h-screen relative">
+      <!-- Mobile menu checkbox (hidden) -->
+      <input type="checkbox" class="hidden peer" id="sidebar-toggle">
 
-            <% if instance_eval(&RailsMail.show_clear_button?) %>                
+      <!-- Collapsed menu button -->
+      <label for="sidebar-toggle" class="lg:hidden fixed top-4 left-4 z-20 p-2 rounded-md text-gray-600 hover:text-gray-900 hover:bg-gray-100 cursor-pointer peer-checked:hidden">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+      </label>
+
+      <!-- Sidebar -->
+      <div class="fixed lg:static inset-y-0 left-0 transform -translate-x-full peer-checked:translate-x-0 lg:translate-x-0 transition duration-200 ease-in-out w-80 bg-white border-r border-gray-200 flex flex-col z-10">
+        <div class="flex-none p-4">
+          <div class="flex items-center justify-between w-full">
+            <!-- Menu icon (visible only on mobile) -->
+            <label for="sidebar-toggle" class="lg:hidden p-2 rounded-md text-gray-600 hover:text-gray-900 hover:bg-gray-100 cursor-pointer">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+              </svg>
+            </label>
+            
+            <!-- Title (centered) -->
+            <%= link_to root_path, class: "text-gray-900" do %>
+              <%= render "layouts/rails_mail/title" %>
+            <% end %>
+
+            <!-- Clear All button (or empty div for spacing when button is hidden) -->
+            <% if instance_eval(&RailsMail.show_clear_button?) %>
               <%= button_to destroy_all_emails_path, 
                   class: "text-sm text-gray-600 hover:text-gray-900",
                   form: { data: { turbo_confirm: "Are you sure you want to clear all emails?" } },
@@ -40,6 +57,8 @@
                   Clear All
                 </div>
               <% end %>
+            <% else %>
+              <div class="w-[88px]"></div> <!-- Placeholder to maintain spacing when button is hidden -->
             <% end %>
           </div>
         </div>
@@ -60,8 +79,8 @@
       </div>
 
       <!-- Main content -->
-      <div class="flex-1 overflow-y-auto">
-        <div class="p-8">
+      <div class="flex-1 overflow-y-auto lg:ml-0">
+        <div class="p-8 lg:p-8 sm:p-4">
           <turbo-frame id="email_content">
             <%= yield %>
           </turbo-frame>
