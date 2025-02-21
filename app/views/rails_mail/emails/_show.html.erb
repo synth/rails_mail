@@ -36,7 +36,7 @@
         </div>
       <% end %>
 
-      <div class="prose max-w-none">
+      <div class="prose max-w-none break-words">
         <% if email.html? %>
           <%= sanitize(email.body, 
             tags: ActionView::Base.sanitized_allowed_tags + ['table', 'tbody', 'tr', 'td'], 
