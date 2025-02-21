@@ -1,5 +1,6 @@
 module RailsMail
   class Email < ApplicationRecord
+    include RailsMail::Engine.routes.url_helpers
     store_accessor :data, :from, :to, :cc, :bcc, :subject, :body, :content_type, :attachments
 
     validates :from, presence: true
@@ -33,7 +34,7 @@ module RailsMail
         "rails_mail:emails",
         target: "email-sidebar",
         partial: "rails_mail/shared/email",
-        locals: { email: self }
+        locals: { email: self, email_path: email_path(self) }
       )
     rescue StandardError => e
       Rails.logger.error "RailsMail::Email#broadcast_email failed: #{e.message}"
