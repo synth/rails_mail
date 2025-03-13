@@ -172,9 +172,8 @@ RailsMail uses Turbo, TurboStreams, and ActionCable to provide real-time updates
 - Implement multi-part (text/html) email support
 
 ## Contributing
-
-RailsMail is built with ruby 3.2.6. This is specified in `.tool-versions`.
+Contribution directions go here.
 
 ## License
-
 The gem is available as open source under the terms of the [MIT License](https://opensource.org/licenses/MIT).
+
