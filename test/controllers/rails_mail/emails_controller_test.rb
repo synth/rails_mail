@@ -54,5 +54,25 @@ module RailsMail
       assert_match /<turbo-stream action="remove"/, @response.body
       assert_match /#{dom_id(@email)}/, @response.body
     end
+
+    test "should broadcast new email and display it on the page" do
+      email_count = RailsMail::Email.count
+
+      get emails_url
+      assert_response :success
+      assert_select "div#email-sidebar > div[id^='email_']", count: email_count
+
+      new_email = RailsMail::Email.create!(
+        from: "test@example.com",
+        to: "recipient@example.com",
+        subject: "New Email",
+        body: "This is a new email",
+        content_type: "text/plain"
+      )
+
+      get emails_url
+      assert_select "div#email-sidebar > div[id^='email_']", count: email_count + 1
+      assert_select "div", text: /New Email/
+    end
   end
 end

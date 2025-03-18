@@ -1,7 +1,7 @@
 <turbo-stream action="update" target="email-sidebar">
   <template>
     <% @emails&.each do |email| %>
-      <%= render partial: "rails_mail/shared/email", locals: {email: email}, formats: [:html] %>
+      <%= render partial: "rails_mail/shared/email", locals: {email: email, email_path: email_path(email) }, formats: [:html] %>
     <% end %>
   </template>
 </turbo-stream>
