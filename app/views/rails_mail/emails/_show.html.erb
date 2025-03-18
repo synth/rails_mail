@@ -2,7 +2,7 @@
   <div class="bg-white shadow rounded-lg" data-email-id="<%= email.id %>" 
        data-email-highlight-current-id-value="<%= email.id %>">
     <div class="px-6 py-4 border-b border-gray-200">
-      <h1 class="text-2xl font-semibold text-gray-900"><%= email.subject %></h1>
+      <h1 class="text-2xl font-semibold text-gray-900 break-words"><%= email.subject %></h1>
       <div class="mt-2 text-sm text-gray-600">
         <div>From: <%= email.from %></div>
         <div>To: <%= email.to.join(", ") %></div>
@@ -36,7 +36,7 @@
         </div>
       <% end %>
 
-      <div class="prose max-w-none">
+      <div class="prose max-w-none break-words">
         <% if email.html? %>
           <%= sanitize(email.body, 
             tags: ActionView::Base.sanitized_allowed_tags + ['table', 'tbody', 'tr', 'td'], 
