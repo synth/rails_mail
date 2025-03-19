@@ -4,8 +4,7 @@
     <title>RailsMail - <%= yield(:title) if content_for?(:title) %></title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= action_cable_meta_tag if defined?(::ActionCable) %>
-    <meta name="csrf-param" content="authenticity_token">
-    <meta name="csrf-token" content="<%= form_authenticity_token %>" data-turbo-track="reload">
+    <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
     <%= tag.link rel: "stylesheet", href: frontend_static_path(:style, format: :css, v: RailsMail::VERSION, locale: nil), nonce: content_security_policy_nonce %>
     
@@ -81,7 +80,7 @@
 
       <!-- Main content -->
       <div class="flex-1 overflow-y-auto lg:ml-0">
-        <div class="p-8 lg:p-8 sm:p-4" data-controller="csrf-token">
+        <div class="p-8 lg:p-8 sm:p-4">
           <turbo-frame id="email_content">
             <%= yield %>
           </turbo-frame>
