@@ -20,7 +20,7 @@ module RailsMail
       session[:current_email_id] = @email.id
 
       if request.headers["Turbo-Frame"]
-        render partial: "rails_mail/emails/show", locals: { email: @email }
+        render partial: "rails_mail/emails/show", locals: { email: @email }, layout: "rails_mail/turbo"
       else
         render :index
       end
