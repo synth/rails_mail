@@ -19,10 +19,20 @@ module RailsMail
       @email = Email.find(params[:id])
       session[:current_email_id] = @email.id
 
-      if request.headers["Turbo-Frame"]
-        render partial: "rails_mail/emails/show", locals: { email: @email }, layout: "rails_mail/turbo"
-      else
-        render :index
+      respond_to do |format|
+        format.html
+        format.turbo_stream do
+          render turbo_stream: [
+              turbo_stream.replace(
+              "email_content",
+              partial: "rails_mail/emails/show",
+              locals: { email: @email }
+            ),
+            turbo_stream.replace("turbo_frame_url",
+              partial: "rails_mail/shared/turbo_frame_url",
+              locals: { url: email_path(@email) })
+          ]
+        end
       end
     end
 

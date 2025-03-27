@@ -1,5 +1,5 @@
 <% if @email.present? %>
-  <%= rails_mail_turbo_frame_tag "email_content", src: email_path(@email) do %>
+  <%= turbo_frame_tag "email_content", src: email_path(@email) do %>
     <div class="bg-white shadow rounded-lg">
       <div class="px-6 py-4">
         <div class="animate-pulse">
