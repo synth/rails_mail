@@ -1,6 +1,5 @@
 module RailsMail
   module TurboHelper
-
     def rails_mail_turbo_stream_from(*streamables, **attributes)
       return unless defined?(::ActionCable)
 
