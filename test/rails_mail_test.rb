@@ -60,7 +60,7 @@ class RailsMailTest < ActiveSupport::TestCase
     assert_equal [ "cc@example.com" ], email.cc
     assert_equal [ "bcc@example.com" ], email.bcc
     assert_equal "Test Email", email.subject
-    assert_includes email.body, "Hello, World!"
+    assert_includes email.text_body, "Hello, World!"
   end
 
   test "delivery method handles attachments" do
