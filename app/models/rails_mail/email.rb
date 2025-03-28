@@ -14,7 +14,7 @@ module RailsMail
     }
 
     def text?
-      content_type&.include?("text/plain")
+      content_type&.include?("text/plain") || content_type&.include?("multipart/alternative")
     end
 
     def html?

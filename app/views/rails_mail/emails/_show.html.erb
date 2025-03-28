@@ -72,7 +72,7 @@
                 attributes: ActionView::Base.sanitized_allowed_attributes + ['style']) %>
             <% end %>
           </div>
-          <div data-email-tabs-target="textContent" class="<%= email.text? ? 'hidden' : '' %>">
+          <div data-email-tabs-target="textContent" class="<%= email.text? ? 'bg-black text-white font-mono p-4 rounded' : 'hidden' %>">
             <% if email.text? %>
               <%= simple_format email.text_body %>
             <% end %>

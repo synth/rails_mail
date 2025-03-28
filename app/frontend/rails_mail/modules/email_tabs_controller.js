@@ -28,6 +28,7 @@ export default class extends Controller {
 
 
       this.htmlTabTarget.classList.add("text-blue-600", "border-b-2", "border-blue-600");
+      this.textTabTarget.classList.remove("text-blue-600", "border-b-2", "border-blue-600");
     }
   }
 
@@ -47,6 +48,7 @@ export default class extends Controller {
       }
 
       this.textTabTarget.classList.add("text-blue-600", "border-b-2", "border-blue-600");
+      this.htmlTabTarget.classList.remove("text-blue-600", "border-b-2", "border-blue-600");
     }
   }
 }
