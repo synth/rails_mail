@@ -1,4 +1,4 @@
-class UserSession
+module UserSession
   def self.find
     nil
   end
