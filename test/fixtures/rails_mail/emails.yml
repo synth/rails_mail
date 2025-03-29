@@ -13,6 +13,8 @@ one:
     body: "Hello World"
     content_type: "text/plain"
     attachments: []
+  created_at: <%= Time.now %>
+  updated_at: <%= Time.now %>
 
 two:
   data:
@@ -24,3 +26,5 @@ two:
     body: "Other content"
     content_type: "text/plain"
     attachments: []
+  created_at: <%= Time.now %>
+  updated_at: <%= Time.now %>
