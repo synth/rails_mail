@@ -19,3 +19,9 @@ group :test do
   gem "actioncable"
   gem "turbo-rails"
 end
+
+group :test, :system_test do
+  gem "capybara"
+  gem "selenium-webdriver"
+  gem "webdrivers"
+end
