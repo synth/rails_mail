@@ -83,6 +83,7 @@ jobs:
         env:
           RAILS_ENV: test
           REDIS_URL: redis://localhost:6379/0
+          SELENIUM_USER_DATA_DIR: ${{ github.workspace }}/tmp/selenium
         run: bin/rails test:system
 
       - name: Keep screenshots from failed system tests
