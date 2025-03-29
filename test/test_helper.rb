@@ -13,9 +13,9 @@ Mime::Type.register "text/vnd.turbo-stream.html", :turbo_stream
 
 # Load fixtures from the engine
 if ActiveSupport::TestCase.respond_to?(:fixture_paths=)
-  ActiveSupport::TestCase.fixture_paths = [ File.expand_path("fixtures", __dir__) ]
+  ActiveSupport::TestCase.fixture_paths = [ File.expand_path("fixtures/rails_mail", __dir__) ]
   ActionDispatch::IntegrationTest.fixture_paths = ActiveSupport::TestCase.fixture_paths
-  ActiveSupport::TestCase.file_fixture_path = File.expand_path("fixtures", __dir__) + "/files"
+  ActiveSupport::TestCase.file_fixture_path = File.expand_path("fixtures/rails_mail", __dir__)
   ActiveSupport::TestCase.fixtures :all
 end
 
