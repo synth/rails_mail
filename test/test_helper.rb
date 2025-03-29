@@ -16,7 +16,6 @@ if ActiveSupport::TestCase.respond_to?(:fixture_paths=)
   ActiveSupport::TestCase.fixture_paths = [ File.expand_path("fixtures/rails_mail", __dir__) ]
   ActionDispatch::IntegrationTest.fixture_paths = ActiveSupport::TestCase.fixture_paths
   ActiveSupport::TestCase.file_fixture_path = File.expand_path("fixtures/rails_mail", __dir__)
-  ActiveSupport::TestCase.fixtures :all
 end
 
 require_relative "support/user_session"
