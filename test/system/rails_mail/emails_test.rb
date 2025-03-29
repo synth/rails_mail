@@ -2,8 +2,10 @@ require "application_system_test_case"
 
 module RailsMail
   class EmailsTest < ApplicationSystemTestCase
+    fixtures :emails
+
     setup do
-      @email = rails_mail_emails(:one)
+      @email = emails(:one)
     end
 
     test "visiting the index" do

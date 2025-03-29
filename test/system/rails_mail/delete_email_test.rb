@@ -2,14 +2,11 @@ require "application_system_test_case"
 
 module RailsMail
   class DeleteEmailTest < ApplicationSystemTestCase
+    fixtures :emails
+
     setup do
-      # Create a test email
-      ActionMailer::Base.deliveries << Mail.new(
-        from: "sender@example.com",
-        to: "recipient@example.com",
-        subject: "Test Email",
-        body: "Test body"
-      )
+      email = emails(:one)
+      RailsMail::Email.where.not(id: email.id).destroy_all
     end
 
     test "deleting an email from sidebar" do

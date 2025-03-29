@@ -3,18 +3,7 @@ require "application_system_test_case"
 module RailsMail
   class ClearEmailsTest < ApplicationSystemTestCase
     include UserSession
-
-    setup do
-      # Create some test emails
-      3.times do |i|
-        ActionMailer::Base.deliveries << Mail.new(
-          from: "sender#{i}@example.com",
-          to: "recipient#{i}@example.com",
-          subject: "Test Email #{i}",
-          body: "Test body #{i}"
-        )
-      end
-    end
+    fixtures :emails
 
     test "clearing all emails" do
       visit rails_mail.emails_path
