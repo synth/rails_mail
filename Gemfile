@@ -22,6 +22,6 @@ end
 
 group :test, :system_test do
   gem "capybara"
-  gem "selenium-webdriver"
+  gem "cuprite"
   gem "webdrivers"
 end
