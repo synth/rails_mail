@@ -7,6 +7,7 @@ require "rails/test_help"
 require "minitest/mock"
 require "debug"
 require_relative "../app/helpers/rails_mail/turbo_helper"
+require "selenium-webdriver"
 
 # Register Turbo Stream MIME type
 Mime::Type.register "text/vnd.turbo-stream.html", :turbo_stream
@@ -19,3 +20,9 @@ if ActiveSupport::TestCase.respond_to?(:fixture_paths=)
 end
 
 require_relative "support/user_session"
+
+# Configure Selenium to use the user data directory from the environment variable
+Selenium::WebDriver::Chrome::Options.new.tap do |options|
+  user_data_dir = ENV["SELENIUM_USER_DATA_DIR"] || Dir.mktmpdir
+  options.add_argument("--user-data-dir=#{user_data_dir}")
+end

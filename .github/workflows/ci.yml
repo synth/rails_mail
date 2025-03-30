@@ -43,6 +43,9 @@ jobs:
           ruby-version: ruby-3.3.4
           bundler-cache: true
 
+      - name: Create temporary directory for Selenium
+        run: echo "SELENIUM_USER_DATA_DIR=$(mktemp -d)" >> $GITHUB_ENV
+
       - name: Run tests
         env:
           RAILS_ENV: test
@@ -83,7 +86,6 @@ jobs:
         env:
           RAILS_ENV: test
           REDIS_URL: redis://localhost:6379/0
-          SELENIUM_USER_DATA_DIR: $(mktemp -d)  # Create a temporary directory for user data
         run: bin/rails test:system
 
       - name: Keep screenshots from failed system tests
