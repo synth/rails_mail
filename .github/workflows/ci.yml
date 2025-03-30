@@ -43,9 +43,6 @@ jobs:
           ruby-version: ruby-3.3.4
           bundler-cache: true
 
-      - name: Create temporary directory for Selenium
-        run: echo "SELENIUM_USER_DATA_DIR=$(mktemp -d)" >> $GITHUB_ENV
-
       - name: Run tests
         env:
           RAILS_ENV: test
