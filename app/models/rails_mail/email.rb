@@ -26,10 +26,14 @@ module RailsMail
     end
 
     def html_body
+      return nil unless html?
+
       html_part["raw_source"]
     end
 
     def text_body
+      return nil unless text?
+
       text_part["raw_source"]
     end
 
