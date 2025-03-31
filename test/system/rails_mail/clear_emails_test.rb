@@ -3,24 +3,14 @@ require "application_system_test_case"
 module RailsMail
   class ClearEmailsTest < ApplicationSystemTestCase
     include UserSession
-
-    setup do
-      # Create some test emails
-      3.times do |i|
-        ActionMailer::Base.deliveries << Mail.new(
-          from: "sender#{i}@example.com",
-          to: "recipient#{i}@example.com",
-          subject: "Test Email #{i}",
-          body: "Test body #{i}"
-        )
-      end
-    end
+    fixtures :emails
 
     test "clearing all emails" do
       visit rails_mail.emails_path
 
       # Verify emails exist before clearing
-      assert_selector ".email-row", count: 3
+      assert RailsMail::Email.count > 0
+      assert_selector "[data-testid='email-row']", count: RailsMail::Email.count
 
       # Click the clear button and confirm the action
       accept_confirm do
@@ -28,8 +18,8 @@ module RailsMail
       end
 
       # Verify emails are removed
-      assert_selector ".email-row", count: 0
-      assert_text "No emails have been sent"
+      assert_selector "[data-testid='email-row']", count: 0
+      assert_text "No emails at the moment"
       assert ActionMailer::Base.deliveries.empty?
     end
 

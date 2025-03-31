@@ -36,14 +36,19 @@ module RailsMail
     private
 
     def broadcast_email
-      return unless defined?(::Turbo) && defined?(::ActionCable)
+      return unless defined?(::ActionCable)
 
-      ::Turbo::StreamsChannel.broadcast_prepend_to(
-        "rails_mail:emails",
-        target: "email-sidebar",
+      html = ApplicationController.render(
         partial: "rails_mail/shared/email",
         locals: { email: self, email_path: email_path(self) }
       )
+
+      turbo_stream = RailsMail::TurboHelper::TurboStreamBuilder.new.prepend(
+        target: "email-sidebar",
+        content: html
+      )
+
+      ActionCable.server.broadcast("rails_mail:emails", turbo_stream)
     rescue StandardError => e
       Rails.logger.error "RailsMail::Email#broadcast_email failed: #{e.message}"
     end
