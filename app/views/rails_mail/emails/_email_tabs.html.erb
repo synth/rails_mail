@@ -1,26 +1,28 @@
-<ul class="flex border-b border-gray-200" role="tablist">
-  <li class="mr-4">
-    <button 
-      class="px-4 py-2 text-sm font-medium <%= 'text-gray-400 cursor-not-allowed' unless email.html? %>" 
-      id="html_tab" 
-      role="tab" 
-      aria-selected="<%= email.html? %>" 
-      data-action="<%= email.html? ? 'click->email-tabs#showHtmlTab' : '' %>" 
-      data-email-tabs-target="htmlTab" 
-      <%= email.html? ? '' : 'disabled' %>>
-      HTML
-    </button>
-  </li>
-  <li>
-    <button 
-      class="px-4 py-2 text-sm font-medium <%= 'text-gray-400 cursor-not-allowed' unless email.text? %>" 
-      id="text_tab" 
-      role="tab" 
-      aria-selected="<%= email.text? %>" 
-      data-action="<%= email.text? ? 'click->email-tabs#showTextTab' : '' %>" 
-      data-email-tabs-target="textTab" 
-      <%= email.text? ? '' : 'disabled tabindex=-1' %>>
-      Text
-    </button>
-  </li>
-</ul>
+<div class="prose max-w-none break-words">
+  <input type="radio" name="email_tab" id="html_tab" class="hidden peer/html" <%= email.html? ? 'checked' : '' %> <%= email.html? ? '' : 'disabled' %> />
+  <label
+    for="html_tab"
+    class="px-4 py-2 text-sm font-medium cursor-pointer peer-checked/html:text-blue-600 peer-checked/html:border-blue-600 peer-checked/html:border-b-2 peer-disabled/html:text-gray-400 peer-disabled/html:cursor-not-allowed">
+    HTML
+  </label>
+  
+  <input type="radio" name="email_tab" id="text_tab" class="hidden peer/text" <%= email.text? ? (!email.html? ? 'checked' : '') : 'disabled' %> />
+  <label
+    for="text_tab"
+    class="px-4 py-2 text-sm font-medium cursor-pointer peer-checked/text:text-blue-600 peer-checked/text:border-blue-600 peer-checked/text:border-b-2 peer-disabled/text:text-gray-400 peer-disabled/text:cursor-not-allowed">
+    Text
+  </label>
+
+  <div class="hidden peer-checked/html:block mt-3">
+    <% if email.html? %>
+      <%= sanitize(email.html_body,
+        tags: ActionView::Base.sanitized_allowed_tags + ['table', 'tbody', 'tr', 'td'],
+        attributes: ActionView::Base.sanitized_allowed_attributes + ['style']) %>
+    <% end %>
+  </div>
+  <div class="hidden peer-checked/text:block mt-3 bg-black text-white font-mono p-4 rounded">
+    <% if email.text? %>
+      <%= simple_format email.text_body %>
+    <% end %>
+  </div>
+</div>

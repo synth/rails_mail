@@ -36,24 +36,9 @@
         </div>
       <% end %>
 
-      <div data-controller="email-tabs">
-        <%= render "email_tabs", email: %>
-
-        <div class="prose max-w-none break-words">
-          <div data-email-tabs-target="<%= email.html? ? 'htmlContent' : '' %>" class="<%= email.html? ? '' : 'hidden' %>">
-            <% if email.html? %>
-              <%= sanitize(email.html_body,
-                tags: ActionView::Base.sanitized_allowed_tags + ['table', 'tbody', 'tr', 'td'], 
-                attributes: ActionView::Base.sanitized_allowed_attributes + ['style']) %>
-            <% end %>
-          </div>
-          <div data-email-tabs-target="textContent" class="<%= email.text? ? 'bg-black text-white font-mono p-4 rounded' : 'hidden' %>">
-            <% if email.text? %>
-              <%= simple_format email.text_body %>
-            <% end %>
-          </div>
-        </div>
+      <div>
+        <%= render "email_tabs", email: email %>
       </div>
     </div>
   </div>
-<% end %> 
+<% end %>
