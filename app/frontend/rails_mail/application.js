@@ -9,8 +9,8 @@ const application = Application.start();
 
 application.register("email-highlight", EmailHighlightController);
 application.register("redirect", RedirectController);
-application.register('auto-submit', AutoSubmit)
-application.register('timeago', Timeago)
+application.register('auto-submit', AutoSubmit);
+application.register('timeago', Timeago);
 
 window.Stimulus = Application.start();
 

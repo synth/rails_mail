@@ -1,7 +1,7 @@
 module RailsMail
   class Email < ApplicationRecord
     include RailsMail::Engine.routes.url_helpers
-    store_accessor :data, :from, :to, :cc, :bcc, :subject, :body, :content_type, :attachments
+    store_accessor :data, :from, :to, :cc, :bcc, :subject, :html_part, :text_part, :content_type, :attachments
 
     validates :from, presence: true
     validates :to, presence: true
@@ -14,15 +14,27 @@ module RailsMail
     }
 
     def text?
-      content_type&.include?("text/plain")
+      content_type&.include?("text/plain") || content_type&.include?("multipart/alternative")
     end
 
     def html?
-      content_type&.include?("text/html")
+      content_type&.include?("text/html") || content_type&.include?("multipart/alternative")
     end
 
     def next_email
       RailsMail::Email.where("id < ?", id).last || RailsMail::Email.first
+    end
+
+    def html_body
+      return nil unless html?
+
+      html_part["raw_source"]
+    end
+
+    def text_body
+      return nil unless text?
+
+      text_part["raw_source"]
     end
 
     private

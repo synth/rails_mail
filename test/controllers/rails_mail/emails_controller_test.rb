@@ -67,7 +67,9 @@ module RailsMail
         from: "test@example.com",
         to: "recipient@example.com",
         subject: "New Email",
-        body: "This is a new email",
+        text_part: {
+          "raw_source": "This is a new email"
+        },
         content_type: "text/plain"
       )
 

@@ -36,15 +36,9 @@
         </div>
       <% end %>
 
-      <div class="prose max-w-none break-words">
-        <% if email.html? %>
-          <%= sanitize(email.body, 
-            tags: ActionView::Base.sanitized_allowed_tags + ['table', 'tbody', 'tr', 'td'], 
-            attributes: ActionView::Base.sanitized_allowed_attributes + ['style']) %>
-        <% else %>
-          <%= simple_format email.body %>
-        <% end %>
+      <div>
+        <%= render "email_tabs", email: email %>
       </div>
     </div>
   </div>
-<% end %> 
+<% end %>
