@@ -1,0 +1,26 @@
+<ul class="flex border-b border-gray-200" role="tablist">
+  <li class="mr-4">
+    <button 
+      class="px-4 py-2 text-sm font-medium <%= 'text-gray-400 cursor-not-allowed' unless email.html? %>" 
+      id="html_tab" 
+      role="tab" 
+      aria-selected="<%= email.html? %>" 
+      data-action="<%= email.html? ? 'click->email-tabs#showHtmlTab' : '' %>" 
+      data-email-tabs-target="htmlTab" 
+      <%= email.html? ? '' : 'disabled' %>>
+      HTML
+    </button>
+  </li>
+  <li>
+    <button 
+      class="px-4 py-2 text-sm font-medium <%= 'text-gray-400 cursor-not-allowed' unless email.text? %>" 
+      id="text_tab" 
+      role="tab" 
+      aria-selected="<%= email.text? %>" 
+      data-action="<%= email.text? ? 'click->email-tabs#showTextTab' : '' %>" 
+      data-email-tabs-target="textTab" 
+      <%= email.text? ? '' : 'disabled tabindex=-1' %>>
+      Text
+    </button>
+  </li>
+</ul>
