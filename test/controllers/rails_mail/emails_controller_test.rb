@@ -4,9 +4,10 @@ module RailsMail
   class EmailsControllerTest < ActionDispatch::IntegrationTest
     include Engine.routes.url_helpers
     include ActionView::RecordIdentifier
+    fixtures :emails
 
     setup do
-      @email = rails_mail_emails(:one)
+      @email = emails(:one)
       @routes = Engine.routes
     end
 
