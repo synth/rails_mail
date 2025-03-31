@@ -2,7 +2,7 @@
   on_current_page = current_page?(RailsMail::Engine.routes.url_helpers.email_path(email))
   highlight_class = on_current_page ? 'bg-gray-300' : ''
 %>
-<%= content_tag :div, id: dom_id(email), class: "group flex items-center px-3 py-2 hover:bg-gray-200 #{highlight_class} active:bg-gray-300 focus:bg-gray-300" do %>
+<%= content_tag :div, id: dom_id(email), class: "group flex items-center px-3 py-2 hover:bg-gray-200 #{highlight_class} active:bg-gray-300 focus:bg-gray-300", data: {testid: "email-row"} do %>
   <%= link_to RailsMail::Engine.routes.url_helpers.email_path(email), 
         class: "flex-1 min-w-0 rounded-md", 
         data: { 

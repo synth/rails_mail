@@ -1,5 +1,8 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
+_fixture:
+  model_class: RailsMail::Email
+
 one:
   data:
     from: "test@example.com"
@@ -10,6 +13,8 @@ one:
     body: "Hello World"
     content_type: "text/plain"
     attachments: []
+  created_at: <%= Time.now %>
+  updated_at: <%= Time.now %>
 
 two:
   data:
@@ -21,3 +26,5 @@ two:
     body: "Other content"
     content_type: "text/plain"
     attachments: []
+  created_at: <%= Time.now %>
+  updated_at: <%= Time.now %>

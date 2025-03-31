@@ -3,9 +3,10 @@ require "test_helper"
 module RailsMail
   class EmailPartialTest < ActionCable::Channel::TestCase
     include Engine.routes.url_helpers
+    fixtures :emails
 
     setup do
-      @email = rails_mail_emails(:one)
+      @email = emails(:one)
       @email.send(:broadcast_email)
     end
 

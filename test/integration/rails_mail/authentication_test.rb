@@ -3,10 +3,11 @@ require "test_helper"
 module RailsMail
   class AuthenticationTest < ActionDispatch::IntegrationTest
     include Engine.routes.url_helpers
+    fixtures :emails
 
     setup do
       @routes = Engine.routes
-      @email = rails_mail_emails(:one)
+      @email = emails(:one)
     end
 
     test "allows access when no authentication callback is configured" do
