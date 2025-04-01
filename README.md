@@ -118,6 +118,11 @@ end
 
 RailsMail supports custom renderers that allow you to add new ways to display emails. For example, you could add a renderer for markdown emails or a special format your application uses.
 
+By default, RailsMail includes these renderers:
+- HTML renderer: Displays HTML email content
+- Text renderer: Displays plain text email content
+- Exception Notifier renderer: Provides formatted display of exception emails from the ExceptionNotifier gem
+
 #### Creating a Custom Renderer
 
 1. Create a new renderer class that inherits from `RailsMail::Renderer::Base`:

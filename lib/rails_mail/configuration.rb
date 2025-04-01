@@ -34,7 +34,7 @@ module RailsMail
     def register_default_renderers
       RailsMail::RendererRegistry.register(RailsMail::Renderer::HtmlRenderer)
       RailsMail::RendererRegistry.register(RailsMail::Renderer::TextRenderer)
-      RailsMail::RendererRegistry.register(RailsMail::Renderer::ExceptionRenderer)
+      RailsMail::RendererRegistry.register(RailsMail::Renderer::ExceptionNotifierRenderer)
     end
   end
 end
