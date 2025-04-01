@@ -4,6 +4,8 @@
 </turbo-stream>
 <turbo-stream action="update" target="email_content">
   <template>
-    <%= render(partial: "rails_mail/emails/empty_state", formats: [ :html ]) %>
+    <div data-controller="redirect" data-redirect-url-value="<%= emails_path %>">
+      <%= render(partial: "rails_mail/emails/empty_state", formats: [ :html ]) %>
+    </div>
   </template>
 </turbo-stream>
