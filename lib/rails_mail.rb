@@ -17,24 +17,12 @@ module RailsMail
       @configuration = Configuration.new
     end
 
-    def authentication_callback(&block)
-      @authentication_callback = block if block
-      @authentication_callback || ->(request) { true }
+    def authentication_callback
+      configuration.authentication_callback || ->(request) { true }
     end
 
-    def show_clear_button?(&block)
-      @show_clear_button = block if block
-      @show_clear_button || ->(request) { true }
+    def show_clear_all_button_callback
+      configuration.show_clear_all_button || ->(request) { true }
     end
   end
-
-  # class Configuration
-  #   def authentication_callback(&block)
-  #     RailsMail.authentication_callback(&block)
-  #   end
-
-  #   def show_clear_button(&block)
-  #     RailsMail.show_clear_button?(&block)
-  #   end
-  # end
 end
