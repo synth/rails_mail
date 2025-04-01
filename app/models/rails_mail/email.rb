@@ -13,12 +13,20 @@ module RailsMail
       where("CAST(data AS CHAR) LIKE :q", q: "%#{query}%")
     }
 
+    def exception_parser
+      @exception_parser ||= ExceptionParser.new(text_body)
+    end
+
     def text?
       content_type&.include?("text/plain") || content_type&.include?("multipart/alternative")
     end
 
     def html?
       content_type&.include?("text/html") || content_type&.include?("multipart/alternative")
+    end
+
+    def exception?
+      exception_parser.valid_format?
     end
 
     def next_email

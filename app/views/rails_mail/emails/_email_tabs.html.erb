@@ -1,17 +1,26 @@
 <div class="prose max-w-none break-words">
-  <input type="radio" name="email_tab" id="html_tab" class="hidden peer/html" <%= email.html? ? 'checked' : '' %> <%= email.html? ? '' : 'disabled' %> />
+  <input type="radio" name="email_tab" id="html_tab" class="hidden peer/html" <%= email.html? && !email.exception_parser.valid_format? ? 'checked' : '' %> <%= email.html? ? '' : 'disabled' %> />
   <label
     for="html_tab"
     class="px-4 py-2 text-sm font-medium cursor-pointer peer-checked/html:text-blue-600 peer-checked/html:border-blue-600 peer-checked/html:border-b-2 peer-disabled/html:text-gray-400 peer-disabled/html:cursor-not-allowed">
     HTML
   </label>
   
-  <input type="radio" name="email_tab" id="text_tab" class="hidden peer/text" <%= email.text? ? (!email.html? ? 'checked' : '') : 'disabled' %> />
+  <input type="radio" name="email_tab" id="text_tab" class="hidden peer/text" <%= email.text? ? (!email.html? || email.exception_parser.valid_format? ? 'checked' : '') : 'disabled' %> />
   <label
     for="text_tab"
     class="px-4 py-2 text-sm font-medium cursor-pointer peer-checked/text:text-blue-600 peer-checked/text:border-blue-600 peer-checked/text:border-b-2 peer-disabled/text:text-gray-400 peer-disabled/text:cursor-not-allowed">
     Text
   </label>
+
+  <% if email.exception_parser.valid_format? %>
+    <input type="radio" name="email_tab" id="exception_tab" class="hidden peer/exception" <%= email.exception_parser.valid_format? ? 'checked' : '' %> />
+    <label
+      for="exception_tab"
+      class="px-4 py-2 text-sm font-medium cursor-pointer peer-checked/exception:text-blue-600 peer-checked/exception:border-blue-600 peer-checked/exception:border-b-2">
+      Exception
+    </label>
+  <% end %>
 
   <div class="hidden peer-checked/html:block mt-3">
     <% if email.html? %>
@@ -20,9 +29,16 @@
         attributes: ActionView::Base.sanitized_allowed_attributes + ['style']) %>
     <% end %>
   </div>
+  
   <div class="hidden peer-checked/text:block mt-3 bg-black text-white font-mono p-4 rounded">
     <% if email.text? %>
       <%= simple_format email.text_body %>
+    <% end %>
+  </div>
+  
+  <div class="hidden peer-checked/exception:block mt-3">
+    <% if email.exception_parser.valid_format? %>
+      <%= render "rails_mail/emails/exception", exception: email.exception_parser.parse %>
     <% end %>
   </div>
 </div>
