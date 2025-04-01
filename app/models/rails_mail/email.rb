@@ -17,32 +17,24 @@ module RailsMail
       @exception_parser ||= ExceptionParser.new(text_body)
     end
 
-    def text?
-      content_type&.include?("text/plain") || content_type&.include?("multipart/alternative")
-    end
-
-    def html?
-      content_type&.include?("text/html") || content_type&.include?("multipart/alternative")
-    end
-
-    def exception?
-      exception_parser.valid_format?
-    end
-
     def next_email
       RailsMail::Email.where("id < ?", id).last || RailsMail::Email.first
     end
 
     def html_body
-      return nil unless html?
-
-      html_part["raw_source"]
+      html_part&.dig("raw_source")
     end
 
     def text_body
-      return nil unless text?
+      text_part&.dig("raw_source")
+    end
 
-      text_part["raw_source"]
+    def renderers
+      RailsMail::RendererRegistry.matching_renderers(self)
+    end
+
+    def render_partials
+      renderers.map(&:partial_name)
     end
 
     private

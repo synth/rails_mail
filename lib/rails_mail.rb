@@ -3,6 +3,7 @@ require "rails_mail/engine"
 require "rails_mail/delivery_method"
 require "rails_mail/configuration"
 require "rails_mail/exception_parser"
+require "rails_mail/renderer"
 
 module RailsMail
   class << self
