@@ -15,7 +15,7 @@ module RailsMail
       end
 
       def self.priority
-        0 # Base priority for standard content
+        10 # Base priority for standard content
       end
     end
   end

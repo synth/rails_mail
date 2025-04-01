@@ -14,7 +14,7 @@ module RailsMail
       end
 
       def self.priority
-        10 # After standard renderers
+        1 # After standard renderers
       end
 
       def self.data(email)

@@ -15,7 +15,7 @@ module RailsMail
       end
 
       def self.priority
-        1 # Just after HTML
+        20 # Just after HTML
       end
     end
   end
