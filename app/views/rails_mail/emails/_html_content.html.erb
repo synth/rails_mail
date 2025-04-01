@@ -1,0 +1,5 @@
+<div class="mt-3">
+  <%= sanitize(email.html_body,
+    tags: ActionView::Base.sanitized_allowed_tags + ['table', 'tbody', 'tr', 'td'],
+    attributes: ActionView::Base.sanitized_allowed_attributes + ['style']) %>
+</div> 

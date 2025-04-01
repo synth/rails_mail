@@ -1,3 +1,5 @@
+require "rails_mail/renderer"
+
 module RailsMail
   class Configuration
     attr_accessor :authentication_callback, :show_clear_all_button_callback,
@@ -10,6 +12,7 @@ module RailsMail
       @trim_emails_older_than = nil
       @trim_emails_max_count = nil
       @enqueue_trim_job = ->(email) { RailsMail::TrimEmailsJob.perform_later }
+      register_default_renderers
     end
 
     def authenticate(&callback)
@@ -24,6 +27,14 @@ module RailsMail
         raise ArgumentError, "show_clear_all_button must be nil or respond to #call"
       end
       @show_clear_all_button_callback = callback
+    end
+
+    private
+
+    def register_default_renderers
+      RailsMail::RendererRegistry.register(RailsMail::Renderer::HtmlRenderer)
+      RailsMail::RendererRegistry.register(RailsMail::Renderer::TextRenderer)
+      RailsMail::RendererRegistry.register(RailsMail::Renderer::ExceptionNotifierRenderer)
     end
   end
 end

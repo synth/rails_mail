@@ -1,0 +1,54 @@
+<div class="max-w-5xl mx-auto p-6 space-y-6">
+  <div class="bg-red-50 p-4 rounded-xl shadow">
+    <h2 class="text-xl font-semibold text-red-800">⚠️ <%= exception.dig(:error, :type) %> in <%= exception.dig(:error, :location) %></h2>
+    <p class="text-red-700 mt-2"><%= exception.dig(:error, :message) %></p>
+    <% if exception.dig(:error, :backtrace_line).present? %>
+      <p class="text-gray-700 mt-2 font-mono text-sm"><%= exception.dig(:error, :backtrace_line) %></p>
+    <% end %>
+  </div>
+
+  <% # Reorder the sections for better logical flow %>
+  <% [:request, :session, :data].each do |section| %>
+    <% if exception[section].present? %>
+      <div class="bg-white border border-gray-200 rounded-xl shadow p-4">
+        <h3 class="text-lg font-bold text-gray-800 capitalize"><%= section %></h3>
+        <dl class="mt-2 grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-3 text-sm">
+          <% exception[section].each do |k, v| %>
+            <div>
+              <dt class="text-gray-500"><%= k %></dt>
+              <dd class="text-gray-800 font-mono break-words"><%= v %></dd>
+            </div>
+          <% end %>
+        </dl>
+      </div>
+    <% end %>
+  <% end %>
+
+  <% if exception[:backtrace].present? %>
+    <div class="bg-gray-100 border border-gray-200 rounded-xl shadow p-4">
+      <h3 class="text-lg font-bold text-gray-800">Backtrace</h3>
+      <ul class="mt-2 list-disc list-inside text-sm text-gray-700 font-mono space-y-1">
+        <% exception[:backtrace].each do |line| %>
+          <li><%= line %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <% if exception[:environment].present? %>
+    <div class="bg-white border border-gray-200 rounded-xl shadow p-4">
+      <h3 class="text-lg font-bold text-gray-800">Environment</h3>
+      <details>
+        <summary class="cursor-pointer text-blue-600 hover:text-blue-800 mb-2">Show Environment Variables</summary>
+        <dl class="mt-2 grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-3 text-sm">
+          <% exception[:environment].each do |k, v| %>
+            <div>
+              <dt class="text-gray-500"><%= k %></dt>
+              <dd class="text-gray-800 font-mono break-words"><%= v %></dd>
+            </div>
+          <% end %>
+        </dl>
+      </details>
+    </div>
+  <% end %>
+</div>
