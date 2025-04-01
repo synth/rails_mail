@@ -4,9 +4,10 @@ module RailsMail
   class EmailsControllerTest < ActionDispatch::IntegrationTest
     include Engine.routes.url_helpers
     include ActionView::RecordIdentifier
+    fixtures :emails
 
     setup do
-      @email = rails_mail_emails(:one)
+      @email = emails(:one)
       @routes = Engine.routes
     end
 
@@ -66,7 +67,9 @@ module RailsMail
         from: "test@example.com",
         to: "recipient@example.com",
         subject: "New Email",
-        body: "This is a new email",
+        text_part: {
+          "raw_source": "This is a new email"
+        },
         content_type: "text/plain"
       )
 

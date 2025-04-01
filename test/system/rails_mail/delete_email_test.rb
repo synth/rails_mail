@@ -2,21 +2,19 @@ require "application_system_test_case"
 
 module RailsMail
   class DeleteEmailTest < ApplicationSystemTestCase
+    fixtures :emails
+
     setup do
-      # Create a test email
-      ActionMailer::Base.deliveries << Mail.new(
-        from: "sender@example.com",
-        to: "recipient@example.com",
-        subject: "Test Email",
-        body: "Test body"
-      )
+      email = emails(:one)
+      RailsMail::Email.where.not(id: email.id).destroy_all
     end
 
     test "deleting an email from sidebar" do
+      email = RailsMail::Email.last
       visit rails_mail.emails_path
 
       # Verify email exists before deletion
-      assert_selector ".email-row", count: 1
+      assert_selector "[data-testid='email-row']", count: 1
       assert_text "Test Email"
 
       # Hover over email to reveal delete button and click it
@@ -24,11 +22,11 @@ module RailsMail
 
       # Accept the confirmation dialog and click delete
       accept_confirm do
-        find("button[type='submit']").click
+        find("#email_#{email.id} button[type='submit']").click
       end
 
       # Verify email is removed
-      assert_no_selector ".email-row"
+      assert_no_selector "[data-testid='email-row']"
       assert_text "No emails at the moment"
       assert ActionMailer::Base.deliveries.empty?
     end

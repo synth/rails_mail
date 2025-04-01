@@ -32,7 +32,7 @@
             <% end %>
 
             <!-- Clear All button (or empty div for spacing when button is hidden) -->
-            <% if instance_eval(&RailsMail.show_clear_button?) %>
+            <% if instance_eval(&RailsMail.show_clear_all_button_callback) %>
               <%= button_to destroy_all_emails_path, 
                   class: "text-sm text-gray-600 hover:text-gray-900",
                   form: { data: { turbo_confirm: "Are you sure you want to clear all emails?" } },

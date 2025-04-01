@@ -1,7 +1,7 @@
 module RailsMail
   class Email < ApplicationRecord
     include RailsMail::Engine.routes.url_helpers
-    store_accessor :data, :from, :to, :cc, :bcc, :subject, :body, :content_type, :attachments
+    store_accessor :data, :from, :to, :cc, :bcc, :subject, :html_part, :text_part, :content_type, :attachments
 
     validates :from, presence: true
     validates :to, presence: true
@@ -14,28 +14,45 @@ module RailsMail
     }
 
     def text?
-      content_type&.include?("text/plain")
+      content_type&.include?("text/plain") || content_type&.include?("multipart/alternative")
     end
 
     def html?
-      content_type&.include?("text/html")
+      content_type&.include?("text/html") || content_type&.include?("multipart/alternative")
     end
 
     def next_email
       RailsMail::Email.where("id < ?", id).last || RailsMail::Email.first
     end
 
+    def html_body
+      return nil unless html?
+
+      html_part["raw_source"]
+    end
+
+    def text_body
+      return nil unless text?
+
+      text_part["raw_source"]
+    end
+
     private
 
     def broadcast_email
-      return unless defined?(::Turbo) && defined?(::ActionCable)
+      return unless defined?(::ActionCable)
 
-      ::Turbo::StreamsChannel.broadcast_prepend_to(
-        "rails_mail:emails",
-        target: "email-sidebar",
+      html = ApplicationController.render(
         partial: "rails_mail/shared/email",
         locals: { email: self, email_path: email_path(self) }
       )
+
+      turbo_stream = RailsMail::TurboHelper::TurboStreamBuilder.new.prepend(
+        target: "email-sidebar",
+        content: html
+      )
+
+      ActionCable.server.broadcast("rails_mail:emails", turbo_stream)
     rescue StandardError => e
       Rails.logger.error "RailsMail::Email#broadcast_email failed: #{e.message}"
     end
