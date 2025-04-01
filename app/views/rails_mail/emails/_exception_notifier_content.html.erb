@@ -1,0 +1,24 @@
+<div class="mt-3">
+  <div class="mb-4">
+    <h2 class="text-lg font-bold mb-2">Error Details</h2>
+    <div class="bg-red-50 border border-red-200 rounded p-4">
+      <p class="font-mono text-sm"><%= exception[:error_message] %></p>
+    </div>
+  </div>
+
+  <div class="mb-4">
+    <h2 class="text-lg font-bold mb-2">Backtrace</h2>
+    <div class="bg-gray-50 border border-gray-200 rounded p-4 overflow-x-auto">
+      <pre class="font-mono text-sm whitespace-pre"><%= exception[:backtrace].join("\n") %></pre>
+    </div>
+  </div>
+
+  <% if exception[:request_data].present? %>
+    <div class="mb-4">
+      <h2 class="text-lg font-bold mb-2">Request Data</h2>
+      <div class="bg-gray-50 border border-gray-200 rounded p-4 overflow-x-auto">
+        <pre class="font-mono text-sm whitespace-pre"><%= exception[:request_data] %></pre>
+      </div>
+    </div>
+  <% end %>
+</div> 
