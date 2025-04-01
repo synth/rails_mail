@@ -91,9 +91,15 @@ RailsMail can be configured through an initializer:
 RailsMail.configure do |config|
   # Optional authentication callback
   # (if using Authlogic. If using Devise see the Authentication section)
-  config.authentication_callback do
+  config.authenticate do
     user_session = UserSession.find
     raise ActionController::RoutingError.new('Not Found') unless user_session&.user&.admin?
+  end
+
+  # Optional decide whether to show the clear button
+  # Useful if you want devs in local envs to be able to clear all emails, but not in staging
+  config.show_clear_all_button do
+    Rails.env.development?
   end
 
   # Delete emails older than the specified duration
