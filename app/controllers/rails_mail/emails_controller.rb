@@ -19,11 +19,9 @@ module RailsMail
       @email = Email.find(params[:id])
       session[:current_email_id] = @email.id
 
-      if request.headers["Turbo-Frame"]
-        render partial: "rails_mail/emails/show", locals: { email: @email }, layout: "rails_mail/turbo"
-      else
-        render :index
-      end
+      # Always render the full show layout
+      # Turbo will automatically replace the content in the matching frame
+      render :show
     end
 
     def destroy
