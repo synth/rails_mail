@@ -19,8 +19,6 @@ module RailsMail
       @email = Email.find(params[:id])
       session[:current_email_id] = @email.id
 
-      # Always render the full show layout
-      # Turbo will automatically replace the content in the matching frame
       render :show
     end
 
