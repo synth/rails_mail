@@ -19,11 +19,7 @@ module RailsMail
       @email = Email.find(params[:id])
       session[:current_email_id] = @email.id
 
-      if request.headers["Turbo-Frame"]
-        render partial: "rails_mail/emails/show", locals: { email: @email }
-      else
-        render :index
-      end
+      render :show
     end
 
     def destroy
