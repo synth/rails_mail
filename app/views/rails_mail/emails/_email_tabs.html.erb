@@ -16,7 +16,7 @@
   <div class="hidden peer-checked/html:block mt-3">
     <% if email.html? %>
       <%= sanitize(email.html_body,
-        tags: ActionView::Base.sanitized_allowed_tags + ['table', 'tbody', 'tr', 'td'],
+        tags: ActionView::Base.sanitized_allowed_tags + ['table', 'tbody', 'tr', 'td', 'style'],
         attributes: ActionView::Base.sanitized_allowed_attributes + ['style']) %>
     <% end %>
   </div>
