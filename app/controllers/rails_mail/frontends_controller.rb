@@ -7,6 +7,9 @@ module RailsMail
       },
       js: {
         tailwind: RailsMail::Engine.root.join("app", "frontend", "rails_mail", "vendor", "tailwind", "tailwind.min.js")
+      },
+      png: {
+        rails_mail_logo: RailsMail::Engine.root.join("app", "assets", "images", "rails_mail", "rails-mail.png")
       }
     }.freeze
 

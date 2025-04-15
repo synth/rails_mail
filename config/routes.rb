@@ -1,7 +1,7 @@
 RailsMail::Engine.routes.draw do
   scope :frontend, controller: :frontends do
     get "modules/*name", action: :module, as: :frontend_module, constraints: { format: "js" }
-    get "static/:name", action: :static, as: :frontend_static, constraints: { format: %w[css js] }
+    get "static/:name", action: :static, as: :frontend_static, constraints: { format: %w[css js png] }
   end
 
   resources :emails, only: [ :index, :show, :destroy ] do
