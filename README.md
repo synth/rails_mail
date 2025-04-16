@@ -19,6 +19,7 @@ RailsMail saves all outgoing emails to your database instead of actually sending
 * Dynamic time ago in words using date-fns
 * Ability to customize how the job that trims emails is enqueued
 * Ability to customize the title in the top left of the page via a standard Rails view that overrides the engine's default view.
+* Toggle between HTML & text-only views for emails.
 
 ## Installation
 
@@ -165,6 +166,7 @@ RailsMail uses Turbo, TurboStreams, and ActionCable to provide real-time updates
 
 - In development environment, the typical default for ActionCable (cable.yml) is to use the async adapter which is an in-memory adapter. If you try to send an email from the rails console, it will not auto-update the ui. You can change the adapter to the development adapter by running `cable.yml` to use something like the redis, postgresql adapter, or solidcable. 
 - In staging environments, the same idea typically applies that you need to use a multi-process adapter like redis, postgresql, or solidcable.
+- Inline `<style>` tags will be sanitized in email bodies.
 
 ## Future work / ideas
 
@@ -176,6 +178,7 @@ RailsMail uses Turbo, TurboStreams, and ActionCable to provide real-time updates
 - Implement read/unread functionality
 - Implement individual email delete
 - Implement multi-part (text/html) email support
+- Allow clients to add additional acceptable HTML tags to render
 
 ## Contributing
 Contribution directions go here.
