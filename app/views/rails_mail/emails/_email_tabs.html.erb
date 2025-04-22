@@ -1,22 +1,27 @@
 <div class="prose max-w-none break-words">
   <% @email.renderers.each_with_index do |renderer, index| %>
-    <input 
-      type="radio" 
-      name="email_tab" 
-      id="<%= renderer.partial_name.parameterize %>_tab" 
+    <input
+      type="radio"
+      name="email_tab"
+      id="<%= renderer.partial_name.parameterize %>_tab"
       class="hidden peer/<%= renderer.partial_name.parameterize %>"
-      <%= index == 0 ? 'checked' : '' %> 
+      <%= index == 0 ? 'checked' : '' %>
     />
     <label
       for="<%= renderer.partial_name.parameterize %>_tab"
-      class="px-4 py-2 text-sm font-medium cursor-pointer peer-checked/<%= renderer.partial_name.parameterize %>:text-blue-600 peer-checked/<%= renderer.partial_name.parameterize %>:border-blue-600 peer-checked/<%= renderer.partial_name.parameterize %>:border-b-2">
+      class="px-4 py-2 text-sm font-medium cursor-pointer
+        peer-checked/<%= renderer.partial_name.parameterize %>:text-blue-600
+        peer-checked/<%= renderer.partial_name.parameterize %>:border-blue-600
+        peer-checked/<%= renderer.partial_name.parameterize %>:border-b-2
+        peer-disabled/<%= renderer.partial_name.parameterize %>:text-gray-400
+        peer-disabled/<%= renderer.partial_name.parameterize %>:cursor-not-allowed">
       <%= renderer.title %>
     </label>
   <% end %>
 
   <% @email.renderers.each do |renderer| %>
     <div class="hidden peer-checked/<%= renderer.partial_name.parameterize %>:block">
-      <%= render partial: renderer.partial_name, 
+      <%= render partial: renderer.partial_name,
                  locals: { email: @email }.merge(renderer.data(@email)) %>
     </div>
   <% end %>
