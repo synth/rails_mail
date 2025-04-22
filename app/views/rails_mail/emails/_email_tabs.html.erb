@@ -1,28 +1,23 @@
 <div class="prose max-w-none break-words">
-  <input type="radio" name="email_tab" id="html_tab" class="hidden peer/html" <%= email.html? ? 'checked' : '' %> <%= email.html? ? '' : 'disabled' %> />
-  <label
-    for="html_tab"
-    class="px-4 py-2 text-sm font-medium cursor-pointer peer-checked/html:text-blue-600 peer-checked/html:border-blue-600 peer-checked/html:border-b-2 peer-disabled/html:text-gray-400 peer-disabled/html:cursor-not-allowed">
-    HTML
-  </label>
-  
-  <input type="radio" name="email_tab" id="text_tab" class="hidden peer/text" <%= email.text? ? (!email.html? ? 'checked' : '') : 'disabled' %> />
-  <label
-    for="text_tab"
-    class="px-4 py-2 text-sm font-medium cursor-pointer peer-checked/text:text-blue-600 peer-checked/text:border-blue-600 peer-checked/text:border-b-2 peer-disabled/text:text-gray-400 peer-disabled/text:cursor-not-allowed">
-    Text
-  </label>
+  <% @email.renderers.each_with_index do |renderer, index| %>
+    <input 
+      type="radio" 
+      name="email_tab" 
+      id="<%= renderer.partial_name.parameterize %>_tab" 
+      class="hidden peer/<%= renderer.partial_name.parameterize %>"
+      <%= index == 0 ? 'checked' : '' %> 
+    />
+    <label
+      for="<%= renderer.partial_name.parameterize %>_tab"
+      class="px-4 py-2 text-sm font-medium cursor-pointer peer-checked/<%= renderer.partial_name.parameterize %>:text-blue-600 peer-checked/<%= renderer.partial_name.parameterize %>:border-blue-600 peer-checked/<%= renderer.partial_name.parameterize %>:border-b-2">
+      <%= renderer.title %>
+    </label>
+  <% end %>
 
-  <div class="hidden peer-checked/html:block mt-3">
-    <% if email.html? %>
-      <%= sanitize(email.html_body,
-        tags: ActionView::Base.sanitized_allowed_tags + ['table', 'tbody', 'tr', 'td'],
-        attributes: ActionView::Base.sanitized_allowed_attributes + ['style']) %>
-    <% end %>
-  </div>
-  <div class="hidden peer-checked/text:block mt-3 bg-black text-white font-mono p-4 rounded">
-    <% if email.text? %>
-      <%= simple_format email.text_body %>
-    <% end %>
-  </div>
+  <% @email.renderers.each do |renderer| %>
+    <div class="hidden peer-checked/<%= renderer.partial_name.parameterize %>:block">
+      <%= render partial: renderer.partial_name, 
+                 locals: { email: @email }.merge(renderer.data(@email)) %>
+    </div>
+  <% end %>
 </div>
