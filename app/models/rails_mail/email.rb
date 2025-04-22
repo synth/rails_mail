@@ -13,12 +13,8 @@ module RailsMail
       where("CAST(data AS CHAR) LIKE :q", q: "%#{query}%")
     }
 
-    def text?
-      content_type&.include?("text/plain") || content_type&.include?("multipart/alternative")
-    end
-
-    def html?
-      content_type&.include?("text/html") || content_type&.include?("multipart/alternative")
+    def exception_parser
+      @exception_parser ||= ExceptionParser.new(text_body)
     end
 
     def next_email
@@ -26,15 +22,19 @@ module RailsMail
     end
 
     def html_body
-      return nil unless html?
-
-      html_part["raw_source"]
+      html_part&.dig("raw_source")
     end
 
     def text_body
-      return nil unless text?
+      text_part&.dig("raw_source")
+    end
 
-      text_part["raw_source"]
+    def renderers
+      RailsMail::RendererRegistry.matching_renderers(self)
+    end
+
+    def render_partials
+      renderers.map(&:partial_name)
     end
 
     private

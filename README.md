@@ -121,6 +121,86 @@ end
 - `trim_emails_max_count`: Keeps only the N most recent emails, deleting older ones.
 - `sync_via`: Controls whether the trimming job runs synchronously (:now) or asynchronously (:later)
 
+### Custom Renderers
+
+RailsMail supports custom renderers that allow you to add new ways to display emails. For example, you could add a renderer for markdown emails or a special format your application uses.
+
+By default, RailsMail includes these renderers:
+- HTML renderer: Displays HTML email content
+- Text renderer: Displays plain text email content
+- Exception Notifier renderer: Provides formatted display of exception emails from the ExceptionNotifier gem
+
+#### Creating a Custom Renderer
+
+1. Create a new renderer class that inherits from `RailsMail::Renderer::Base`:
+
+```ruby
+# app/renderers/markdown_renderer.rb
+module RailsMail
+  module Renderer
+    class MarkdownRenderer < Base
+      def self.handles?(email)
+        email.content_type&.include?("text/markdown")
+      end
+
+      def self.partial_name
+        "rails_mail/emails/markdown_content"
+      end
+
+      def self.title
+        "Markdown"
+      end
+
+      def self.priority
+        5 # Between Text and Exception renderers
+      end
+
+      def self.data(email)
+        { markdown_content: process_markdown(email.text_body) }
+      end
+
+      private
+
+      def self.process_markdown(text)
+        # Your markdown processing logic here
+        text
+      end
+    end
+  end
+end
+```
+
+2. Create a partial for your renderer:
+
+```erb
+# app/views/rails_mail/emails/_markdown_content.html.erb
+<div class="mt-3 markdown-content">
+  <%= markdown_content %>
+</div>
+```
+
+3. Register your renderer in an initializer:
+
+```ruby
+# config/initializers/rails_mail.rb
+RailsMail.configure do |config|
+  # ... other configuration ...
+end
+
+# Register custom renderers after configuration
+RailsMail::RendererRegistry.register(RailsMail::Renderer::MarkdownRenderer)
+```
+
+#### Renderer API
+
+Custom renderers must implement these class methods:
+
+- `handles?(email)`: Returns true if this renderer should handle the email
+- `partial_name`: Returns the path to the partial that renders the content
+- `title`: (optional) The tab title. Defaults to the class name without "Renderer"
+- `priority`: (optional) Order in which renderers appear. Lower numbers appear first
+- `data(email)`: (optional) Additional data to pass to the partial. Returns a hash
+
 ### Customize the title
 Since this is a Rails engine, you can customize the title by creating a file at `app/views/layouts/rails_mail/_title.html.erb`.
 
