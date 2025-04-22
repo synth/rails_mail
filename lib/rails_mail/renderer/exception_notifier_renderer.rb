@@ -6,7 +6,7 @@ module RailsMail
       end
 
       def self.partial_name
-        "rails_mail/emails/exception_notifier_content"
+        "rails_mail/emails/exception"
       end
 
       def self.title
