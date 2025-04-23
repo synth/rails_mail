@@ -1,7 +1,8 @@
 PATH
   remote: .
   specs:
-    rails_mail (0.10.2)
+    rails_mail (0.10.4)
+      nokogiri (>= 1.14, < 2.0)
       rails (>= 7, < 9)
 
 GEM

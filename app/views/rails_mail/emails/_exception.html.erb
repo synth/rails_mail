@@ -1,4 +1,4 @@
-<div class="max-w-5xl mx-auto p-6 space-y-6">
+<div class="max-w-5xl mx-auto py-6 space-y-6">
   <div class="bg-red-50 p-4 rounded-xl shadow">
     <h2 class="text-xl font-semibold text-red-800">⚠️ <%= exception.dig(:error, :type) %> in <%= exception.dig(:error, :location) %></h2>
     <p class="text-red-700 mt-2"><%= exception.dig(:error, :message) %></p>
