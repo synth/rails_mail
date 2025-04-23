@@ -4,6 +4,7 @@ module RailsMail
       doc = Nokogiri::HTML::DocumentFragment.parse(raw_html)
       doc.css("a[href]").each do |a|
         a.set_attribute("target", "_blank")
+        a.set_attribute("rel", "noopener noreferrer")
         a.set_attribute("data-turbo", "false")
       end
       sanitize(doc.to_html,
