@@ -27,6 +27,12 @@ export default class extends Controller {
     // Add active class to clicked email's container
     const clickedLink = event.currentTarget
     clickedLink.closest(".group").classList.add(this.constructor.activeClass)
+
+    // Add blur effect to the main content section
+    const mainContent = document.querySelector("#email_content div")
+    if (mainContent) {
+      mainContent.classList.add("blur-[3px]")
+    }
   }
 
   highlightCurrentEmail() {
