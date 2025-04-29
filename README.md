@@ -256,8 +256,6 @@ RailsMail uses Turbo, TurboStreams, and ActionCable to provide real-time updates
 - Implement introspection of application notifiers and allow manual delivery/inspection of emails
   - Need to introspect the arguments of the notifier and see if the arguments can be paired with active record models or to allow a mapping of argument type to sample data / fixtures. 
 - Implement read/unread functionality
-- Implement individual email delete
-- Implement multi-part (text/html) email support
 - Allow clients to add additional acceptable HTML tags to render
 
 ## Contributing
