@@ -6,4 +6,5 @@
   <% @emails&.each do |email| %>
     <%= render "rails_mail/shared/email", email: email, email_path: email_path(email) %>
   <% end %>
+  <%= pagy_nav(@pagy).html_safe %>
 </div>

@@ -24,6 +24,7 @@ Gem::Specification.new do |spec|
 
   spec.add_dependency "rails", ">= 7", "< 9"
   spec.add_dependency "nokogiri", ">= 1.14", "< 2.0"
+  spec.add_dependency "pagy"
 
   spec.add_development_dependency "debug", ">= 1.0.0"
 end

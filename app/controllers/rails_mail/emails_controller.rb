@@ -1,11 +1,14 @@
 module RailsMail
   class EmailsController < BaseController
+    include Pagy::Backend
+
     # GET /emails
     def index
       @emails = Email.all
       @emails = @emails.search(params[:q]) if params[:q].present?
       @emails = @emails.order(created_at: :desc)
-      @email = params[:id] ? Email.find(params[:id]) : Email.last
+      @pagy, @emails = pagy(@emails, items: 10)
+      @email = params[:id] ? Email.find(params[:id]) : @emails.last
 
       respond_to do |format|
         format.html
@@ -16,6 +19,7 @@ module RailsMail
     # GET /emails/1
     def show
       @emails = Email.order(created_at: :desc)
+      @pagy, @emails = pagy(@emails, items: 10)
       @email = Email.find(params[:id])
       session[:current_email_id] = @email.id
 

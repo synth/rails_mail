@@ -1,5 +1,7 @@
 module RailsMail
   module EmailsHelper
+    include ::Pagy::Frontend
+
     def prepare_email_html(raw_html)
       doc = Nokogiri::HTML::DocumentFragment.parse(raw_html)
       doc.css("a[href]").each do |a|
