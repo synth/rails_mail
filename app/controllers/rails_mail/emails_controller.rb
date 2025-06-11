@@ -18,7 +18,7 @@ module RailsMail
 
       respond_to do |format|
         format.html
-        format.turbo_stream if params.key?(:q) || params.key?(:page)
+        format.turbo_stream if params[:q].present? || params[:page].present?
       end
     end
 
