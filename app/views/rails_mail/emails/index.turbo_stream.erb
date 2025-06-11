@@ -1,8 +1,12 @@
-<turbo-stream action="<%= @turbo_stream_action %>" target="email-sidebar">
+<turbo-stream action="<%= @turbo_stream_action %>" target="email-list-wrapper">
   <template>
     <% @emails&.each do |email| %>
       <%= render partial: "rails_mail/shared/email", locals: {email: email, email_path: email_path(email) }, formats: [:html] %>
     <% end %>
+  </template>
+</turbo-stream>
+<turbo-stream action="replace" target="pager">
+  <template>
     <% if @pagy.next %>
       <%= render partial: "rails_mail/shared/pagination", formats: [:html] %>
     <% end %>

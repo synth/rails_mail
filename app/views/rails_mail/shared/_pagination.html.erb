@@ -1,6 +1,11 @@
-<div class="pager">
+<div id="pager">
+<% 
+path_opts = {}
+path_opts[:page] = @pagy.next if @pagy.next
+path_opts[:q] = params[:q] if params[:q].present?
+%>
   <%= link_to("Load more", 
-        emails_path(page: @pagy.next), 
+        emails_path(path_opts),
         class: "text-blue-600 hover:text-blue-900",
         data: { turbo_stream: '' }  
         ) %>

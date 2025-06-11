@@ -3,9 +3,11 @@
 <% end %>
 
 <div id="email-sidebar" data-controller="email-highlight">
-  <% @emails&.each do |email| %>
-    <%= render "rails_mail/shared/email", email: email, email_path: email_path(email) %>
-  <% end %>
+  <div id="email-list-wrapper">
+    <% @emails&.each do |email| %>
+      <%= render "rails_mail/shared/email", email: email, email_path: email_path(email) %>
+    <% end %>
+  </div>
   <% if @pagy.next %>
     <%= render "rails_mail/shared/pagination" %>
   <% end %>
