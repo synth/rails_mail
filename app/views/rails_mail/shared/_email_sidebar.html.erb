@@ -6,4 +6,7 @@
   <% @emails&.each do |email| %>
     <%= render "rails_mail/shared/email", email: email, email_path: email_path(email) %>
   <% end %>
+  <% if @pagy.next %>
+    <%= render "rails_mail/shared/pagination" %>
+  <% end %>
 </div>

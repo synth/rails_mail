@@ -9,10 +9,16 @@ module RailsMail
       @emails = @emails.order(created_at: :desc)
       @pagy, @emails = pagy(@emails, items: 10)
       @email = params[:id] ? Email.find(params[:id]) : @emails.last
+      # update for search, append for pagination
+      @turbo_stream_action = if params.key?(:page) && params[:page].to_i > 1
+                               'append'
+                             else
+                              'update'
+                             end
 
       respond_to do |format|
         format.html
-        format.turbo_stream if params.key?(:q)
+        format.turbo_stream if params.key?(:q) || params.key?(:page)
       end
     end
 

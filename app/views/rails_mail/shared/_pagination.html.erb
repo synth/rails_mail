@@ -1,0 +1,7 @@
+<div class="pager">
+  <%= link_to("Load more", 
+        emails_path(page: @pagy.next), 
+        class: "text-blue-600 hover:text-blue-900",
+        data: { turbo_stream: '' }  
+        ) %>
+</div>
