@@ -7,7 +7,7 @@ module RailsMail
       @emails = Email.all
       @emails = @emails.search(params[:q]) if params[:q].present?
       @emails = @emails.order(created_at: :desc)
-      @pagy, @emails = pagy(@emails, items: 10)
+      @pagy, @emails = pagy(@emails)
       @email = params[:id] ? Email.find(params[:id]) : @emails.last
       # update for search, append for pagination
       @turbo_stream_action = if params.key?(:page) && params[:page].to_i > 1
@@ -25,7 +25,7 @@ module RailsMail
     # GET /emails/1
     def show
       @emails = Email.order(created_at: :desc)
-      @pagy, @emails = pagy(@emails, items: 10)
+      @pagy, @emails = pagy(@emails)
       @email = Email.find(params[:id])
       session[:current_email_id] = @email.id
 
