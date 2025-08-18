@@ -8,7 +8,7 @@ module RailsMail
         a.set_attribute("data-turbo", "false")
       end
       sanitize(doc.to_html,
-        tags: ActionView::Base.sanitized_allowed_tags + [ "table", "tbody", "tr", "td" ],
+        tags: ActionView::Base.sanitized_allowed_tags + [ "table", "tbody", "tr", "td", "th", "thead" ],
         attributes: ActionView::Base.sanitized_allowed_attributes + [ "style", "target", "data-turbo" ])
     end
   end
