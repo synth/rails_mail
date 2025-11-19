@@ -1,6 +1,6 @@
 module RailsMail
   class EmailsController < BaseController
-    include Pagy::Backend
+    include Pagy::Method
 
     # GET /emails
     def index
