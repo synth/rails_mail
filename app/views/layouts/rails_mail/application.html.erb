@@ -49,13 +49,25 @@
           </div>
         </div>
 
-        <div id="search-form" class="flex-none px-2 pb-2">
-          <%= form_with url: rails_mail.emails_path, method: :get, data: { turbo_stream: true, turbo_frame: "emails_list",controller: 'auto-submit' } do |f| %>
-            <%= f.search_field :q, 
-              value: params[:q],
-              class: "w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500",
-              placeholder: "Search emails...",
-              data: { action: 'keyup->auto-submit#submit search->auto-submit#submit' } %>
+        <div id="search-form" class="flex flex-col px-2 pb-2 gap-2">
+          <%= form_with url: rails_mail.emails_path, method: :get, data: { turbo_stream: true, turbo_frame: "emails_list", controller: 'auto-submit' }, html: { class: 'w-full flex flex-col gap-2' } do |f| %>
+
+            <!-- Search field -->
+            <%= f.search_field :q,
+                               value: params[:q],
+                               class: "w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500",
+                               placeholder: "Search emails...",
+                               data: { action: 'keyup->auto-submit#submit search->auto-submit#submit' } %>
+
+            <!-- Per-page dropdown on next line -->
+            <div class="flex items-center gap-2">
+              <label for="per_page" class="text-sm font-medium">Emails per page:</label>
+              <%= select_tag :per_page,
+                             options_for_select([20, 40, 80, 100], params[:per_page] || RailsMail.configuration.per_page || 20),
+                             class: "px-2 py-1 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500",
+                             data: { action: 'change->auto-submit#submit' } %>
+            </div>
+
           <% end %>
         </div>
 
