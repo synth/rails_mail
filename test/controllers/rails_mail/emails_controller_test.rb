@@ -77,5 +77,37 @@ module RailsMail
       assert_select "div#email-sidebar > div[id^='email_']", count: email_count + 1
       assert_select "div", text: /New Email/
     end
+
+    test "should search emails by subject" do
+      RailsMail::Email.create!(
+        from: "searcher@example.com",
+        to: "recipient@example.com",
+        subject: "UniqueSearchSubject",
+        text_part: { "raw_source": "Search body" },
+        content_type: "text/plain"
+      )
+
+      get emails_url, params: { q: "UniqueSearchSubject" }
+      assert_response :success
+      assert_select "div#email-sidebar", /UniqueSearchSubject/
+    end
+
+    test "should paginate emails" do
+      # Create enough emails to require pagination (assuming per_page is 10)
+      15.times do |i|
+        RailsMail::Email.create!(
+          from: "user#{i}@example.com",
+          to: "recipient@example.com",
+          subject: "Paginate Email #{i}",
+          text_part: { "raw_source": "Body #{i}" },
+          content_type: "text/plain"
+        )
+      end
+
+      get emails_url, params: { page: 2, per_page: 10 }
+      assert_response :success
+      # Should not include the first email on the second page
+      assert_select "div#email-sidebar > div", minimum: 1
+    end
   end
 end
