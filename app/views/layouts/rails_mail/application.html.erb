@@ -24,7 +24,7 @@
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
               </svg>
             </label>
-            
+
             <!-- Title (centered) -->
             <%= link_to root_path, class: "text-gray-900" do %>
               <%= render "layouts/rails_mail/title" %>
@@ -32,7 +32,7 @@
 
             <!-- Clear All button (or empty div for spacing when button is hidden) -->
             <% if instance_eval(&RailsMail.show_clear_all_button_callback) %>
-              <%= button_to destroy_all_emails_path, 
+              <%= button_to destroy_all_emails_path,
                   class: "text-sm text-gray-600 hover:text-gray-900",
                   form: { data: { turbo_confirm: "Are you sure you want to clear all emails?" } },
                   method: :delete do %>
@@ -84,4 +84,4 @@
       </div>
     </div>
   </body>
-</html> 
+</html>
