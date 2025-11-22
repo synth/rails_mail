@@ -59,15 +59,6 @@
                                placeholder: "Search emails...",
                                data: { action: 'keyup->auto-submit#submit search->auto-submit#submit' } %>
 
-            <!-- Per-page dropdown on next line -->
-            <div class="flex items-center gap-2">
-              <label for="per_page" class="text-sm font-medium">Emails per page:</label>
-              <%= select_tag :per_page,
-                             options_for_select([20, 40, 80, 100], params[:per_page] || RailsMail.configuration.per_page || 20),
-                             class: "px-2 py-1 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500",
-                             data: { action: 'change->auto-submit#submit' } %>
-            </div>
-
           <% end %>
         </div>
 
