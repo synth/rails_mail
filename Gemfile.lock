@@ -3,7 +3,7 @@ PATH
   specs:
     rails_mail (0.11.0)
       nokogiri (>= 1.14, < 2.0)
-      pagy
+      pagy (>= 5.0, < 10)
       rails (>= 7, < 9)
 
 GEM
