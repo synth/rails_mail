@@ -93,8 +93,9 @@ module RailsMail
     end
 
     test "should paginate emails" do
-      # Create enough emails to require pagination (assuming per_page is 10)
-      15.times do |i|
+      RailsMail::Email.delete_all
+      # Create enough emails to require pagination
+      25.times do |i|
         RailsMail::Email.create!(
           from: "user#{i}@example.com",
           to: "recipient@example.com",
@@ -104,7 +105,7 @@ module RailsMail
         )
       end
 
-      get emails_url, params: { page: 2, per_page: 10 }
+      get emails_url, params: { page: 2 }
       assert_response :success
       # Should not include the first email on the second page
       assert_select "div#email-sidebar > div", minimum: 1

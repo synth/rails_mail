@@ -7,10 +7,7 @@ module RailsMail
       @emails = Email.all
       @emails = @emails.search(params[:q]) if params[:q].present?
       @emails = @emails.order(created_at: :desc)
-      # Pagy options: only add limit if user supplied one
-      pagy_options = {}
-      pagy_options[:limit] = params[:per_page].to_i if params[:per_page].present?
-      @pagy, @emails = pagy(@emails, **pagy_options)
+      @pagy, @emails = pagy(@emails)
       @email = params[:id] ? Email.find(params[:id]) : @emails.last
       # update for search, append for pagination
       @turbo_stream_action = if params.key?(:page) && params[:page].to_i > 1
