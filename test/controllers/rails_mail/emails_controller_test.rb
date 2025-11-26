@@ -58,10 +58,9 @@ module RailsMail
 
     test "should broadcast new email and display it on the page" do
       email_count = RailsMail::Email.count
-
       get emails_url
       assert_response :success
-      assert_select "div#email-sidebar > div[id^='email_']", count: email_count
+      assert_select "div#email-sidebar div[id^='email_']", count: email_count
 
       new_email = RailsMail::Email.create!(
         from: "test@example.com",
@@ -74,7 +73,7 @@ module RailsMail
       )
 
       get emails_url
-      assert_select "div#email-sidebar > div[id^='email_']", count: email_count + 1
+      assert_select "div#email-sidebar div[id^='email_']", count: email_count + 1
       assert_select "div", text: /New Email/
     end
 
