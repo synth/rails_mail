@@ -12,7 +12,7 @@
 # Here are the few that make more sense as DEFAULTs:
 
 # FIXME: per_page config set from client app is not being relayed here
-Pagy::DEFAULT = Pagy::DEFAULT.merge(limit: RailsMail.configuration.per_page || 20)
+Pagy::DEFAULT = Pagy::DEFAULT.dup.merge(limit: RailsMail.configuration.per_page || 20)
 
 # Pagy::DEFAULT[:size]        = 7                     # default
 # Pagy::DEFAULT[:ends]        = true                  # default
