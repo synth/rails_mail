@@ -50,12 +50,14 @@
         </div>
 
         <div id="search-form" class="flex-none px-2 pb-2">
-          <%= form_with url: rails_mail.emails_path, method: :get, data: { turbo_stream: true, turbo_frame: "emails_list",controller: 'auto-submit' } do |f| %>
+          <%= form_with url: rails_mail.emails_path, method: :get, data: { turbo_stream: true, turbo_frame: "emails_list", controller: 'auto-submit' } do |f| %>
             <%= f.search_field :q,
                                value: params[:q],
                                class: "w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500",
                                placeholder: "Search emails...",
                                data: { action: 'keyup->auto-submit#submit search->auto-submit#submit' } %>
+          <% end %>
+        </div>
 
         <nav class="flex-1 overflow-y-auto px-2">
           <%= render "rails_mail/shared/email_sidebar" %>
