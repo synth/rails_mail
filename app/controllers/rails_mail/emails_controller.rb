@@ -9,13 +9,10 @@ module RailsMail
       @emails = @emails.order(created_at: :desc)
       @pagy, @emails = pagy(@emails)
       @email = params[:id] ? Email.find(params[:id]) : @emails.last
-      # update for search, append for pagination
-      @turbo_stream_action =
-        if params.key?(:page) && params[:page].to_i > 1
-          "append"
-        else
-          "update"
-        end
+      # we're not paginating, so it means we're either the initial index page
+      # load or we're searching. In which case run an "update" turbo stream
+      # to replace all the results.
+      @turbo_stream_action = paginating? ? "append" :  "update"
 
       respond_to do |format|
         format.html
@@ -50,6 +47,12 @@ module RailsMail
         format.html { redirect_to emails_path }
         format.turbo_stream
       end
+    end
+
+    private
+
+    def paginating?
+      params.key?(:page) && params[:page].to_i > 1
     end
   end
 end
