@@ -10,11 +10,12 @@ module RailsMail
       @pagy, @emails = pagy(@emails)
       @email = params[:id] ? Email.find(params[:id]) : @emails.last
       # update for search, append for pagination
-      @turbo_stream_action = if params.key?(:page) && params[:page].to_i > 1
-                              'append'
-                             else
-                              'update'
-                             end
+      @turbo_stream_action =
+        if params.key?(:page) && params[:page].to_i > 1
+          "append"
+        else
+          "update"
+        end
 
       respond_to do |format|
         format.html
