@@ -1,18 +1,21 @@
 module RailsMail
   class EmailsController < BaseController
-    include Pagy::Method
 
     # GET /emails
     def index
+      page_limit = 5
       @emails = Email.all
       @emails = @emails.search(params[:q]) if params[:q].present?
       @emails = @emails.order(created_at: :desc)
-      @pagy, @emails = pagy(@emails)
+      @current_page = params[:page].to_i
+      
+      @emails = @emails.offset(page_limit*@current_page).limit(page_limit)
+      @next_page = @current_page + 1 if(@emails.count > page_limit*@current_page + page_limit)
       @email = params[:id] ? Email.find(params[:id]) : @emails.last
       # we're not paginating, so it means we're either the initial index page
       # load or we're searching. In which case run an "update" turbo stream
       # to replace all the results.
-      @turbo_stream_action = paginating? ? "append" :  "update"
+      @turbo_stream_action = paginating? ? "append" : "update"
 
       respond_to do |format|
         format.html
@@ -23,7 +26,11 @@ module RailsMail
     # GET /emails/1
     def show
       @emails = Email.order(created_at: :desc)
-      @pagy, @emails = pagy(@emails)
+      page_limit = 20
+      @current_page = params[:page].to_i
+      
+      @emails = @emails.offset(page_limit*@current_page).limit(page_limit)
+      @next_page = @current_page + 1 if(@emails.count > page_limit*@current_page + page_limit)
       @email = Email.find(params[:id])
       session[:current_email_id] = @email.id
 

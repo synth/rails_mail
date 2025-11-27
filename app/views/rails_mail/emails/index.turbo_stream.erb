@@ -7,8 +7,8 @@
 </turbo-stream>
 <turbo-stream action="replace" target="email-pagination">
   <template>
-    <% if @pagy.next %>
-      <% path_opts = { format: "turbo_stream", page: @pagy.next } %>
+    <% if @next_page %>
+      <% path_opts = { format: "turbo_stream", page: @next_page.next } %>
       <% path_opts[:q] = params[:q] if params[:q].present? %>
       <%= turbo_frame_tag "email-pagination", src: emails_path(path_opts), loading: "lazy" %>
     <% end %>

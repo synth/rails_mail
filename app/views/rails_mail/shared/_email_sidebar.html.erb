@@ -8,8 +8,8 @@
       <%= render "rails_mail/shared/email", email: email, email_path: email_path(email) %>
     <% end %>
   </div>
-  <% if @pagy.next %>
-    <% path_opts = { format: "turbo_stream", page: @pagy.next } %>
+  <% if @next_page %>
+    <% path_opts = { format: "turbo_stream", page: @next_page } %>
     <% path_opts[:q] = params[:q] if params[:q].present? %>
     <%= turbo_frame_tag "email-pagination", src: emails_path(path_opts), loading: "lazy", style: "display: block; height: 50px;" %>
   <% end %>
