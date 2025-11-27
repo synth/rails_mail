@@ -61,7 +61,7 @@ module RailsMail
         next_page = current_page + 1
       end
 
-      [paginated_relation, next_page]
+      [ paginated_relation, next_page ]
     end
   end
 end
