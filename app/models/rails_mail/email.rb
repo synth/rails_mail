@@ -1,5 +1,6 @@
 module RailsMail
   class Email < ApplicationRecord
+    include Paginatable
     include RailsMail::Engine.routes.url_helpers
     store_accessor :data, :from, :to, :cc, :bcc, :subject, :html_part, :text_part, :content_type, :attachments
 
