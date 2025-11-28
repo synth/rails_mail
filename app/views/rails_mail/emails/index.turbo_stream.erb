@@ -1,7 +1,16 @@
-<turbo-stream action="update" target="email-sidebar">
+<turbo-stream action="<%= @turbo_stream_action %>" target="email-list-wrapper">
   <template>
     <% @emails&.each do |email| %>
       <%= render partial: "rails_mail/shared/email", locals: {email: email, email_path: email_path(email) }, formats: [:html] %>
+    <% end %>
+  </template>
+</turbo-stream>
+<turbo-stream action="replace" target="email-pagination">
+  <template>
+    <% if @next_page %>
+      <% path_opts = { format: "turbo_stream", page: @next_page.next } %>
+      <% path_opts[:q] = params[:q] if params[:q].present? %>
+      <%= turbo_frame_tag "email-pagination", src: emails_path(path_opts), loading: "lazy" %>
     <% end %>
   </template>
 </turbo-stream>
