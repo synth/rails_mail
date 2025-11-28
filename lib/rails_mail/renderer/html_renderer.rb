@@ -2,8 +2,7 @@ module RailsMail
   module Renderer
     class HtmlRenderer < Base
       def self.handles?(email)
-        email.content_type&.include?("text/html") ||
-          email.content_type&.include?("multipart/alternative")
+        email.html_part.present?
       end
 
       def self.partial_name
