@@ -12,6 +12,7 @@ RailsMail saves all outgoing emails to your database instead of actually sending
 * Implements delivery_method for ActionMailer to catch emails and store them in the database
 * Real-time updates using Turbo and ActionCable
 * Search functionality across email fields (subject, from, to, cc, bcc)
+* Infinite scrolling with customizable per-page count
 * Clean, responsive UI for viewing email contents
 * Optional authentication support
 * Trimming emails older than a specified duration or a maximum number of emails
@@ -111,6 +112,9 @@ RailsMail.configure do |config|
 
   # Control whether trimming runs synchronously (:now) or asynchronously (:later)
   config.sync_via = :later
+
+  # Per-page count for infinite scroll
+  config.per_page = 20
 end
 ```
 
