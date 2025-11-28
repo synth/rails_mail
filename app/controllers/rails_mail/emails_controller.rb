@@ -54,11 +54,12 @@ module RailsMail
       params.key?(:page) && params[:page].to_i >= 1
     end
 
-    def paginate_with_next_page(relation, page_limit: 20, page: nil)
+    def paginate_with_next_page(relation, page: nil)
+      per_page = RailsMail.configuration.per_page || 20
       current_page = (page || params[:page] || 0).to_i
       total_count = relation.count
-      items = relation.offset(current_page * page_limit).limit(page_limit)
-      next_page = total_count > page_limit * (current_page + 1) ? current_page + 1 : nil
+      items = relation.offset(current_page * per_page).limit(per_page)
+      next_page = total_count > per_page * (current_page + 1) ? current_page + 1 : nil
 
       {
         items: items,
