@@ -5,7 +5,7 @@ module RailsMail
       @emails = Email.order(created_at: :desc)
       @emails = @emails.search(params[:q]) if params[:q].present?
       paginated = paginate_with_next_page(@emails, page: params[:page].to_i)
-      @emails, @next_page = paginated[:items], paginated[:next_page]
+      @emails, @next_page = paginated.items, paginated.next_page
       @email = params[:id] ? Email.find(params[:id]) : @emails.last
       # we're not paginating, so it means we're either the initial index page
       # load or we're searching. In which case run an "update" turbo stream
@@ -22,7 +22,7 @@ module RailsMail
     def show
       @emails = Email.order(created_at: :desc)
       paginated = paginate_with_next_page(@emails, page: params[:page].to_i)
-      @emails, @next_page = paginated[:items], paginated[:next_page]
+      @emails, @next_page = paginated.items, paginated.next_page
       @email = Email.find(params[:id])
       session[:current_email_id] = @email.id
 
@@ -60,11 +60,7 @@ module RailsMail
       total_count = relation.count
       items = relation.offset(current_page * per_page).limit(per_page)
       next_page = total_count > per_page * (current_page + 1) ? current_page + 1 : nil
-
-      {
-        items: items,
-        next_page: next_page
-      }
+      Struct.new(:items, :next_page).new(items, next_page)
     end
   end
 end
